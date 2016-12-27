@@ -2,14 +2,23 @@ package com.gps21.java;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
-
+import java.util.Map;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+
+import com.gps21.Services.UserService;
+import com.gps21.model.Position;
 
 /**
  * Handles requests for the application home page.
@@ -34,6 +43,14 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@RequestMapping(value="/list",method=RequestMethod.POST)
+	public @ResponseBody Map<String, Object>  listperson(Position position){
+		Map<String, Object> map=new HashMap<String, Object>();
+		
+	
+	return 	null;
 	}
 	
 }
