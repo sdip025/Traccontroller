@@ -2,6 +2,7 @@ package com.gps21.model;
 
 import java.io.Serializable;
 
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -58,12 +59,12 @@ public class Device implements Serializable {
 	}
 
 
-	public Position getLatestPosition() {
+	public Positions getLatestPosition() {
 		return latestPosition;
 	}
 
 
-	public void setLatestPosition(Position latestPosition) {
+	public void setLatestPosition(Positions latestPosition) {
 		this.latestPosition = latestPosition;
 	}
 
@@ -75,7 +76,7 @@ public class Device implements Serializable {
 
 	private String uniqueid;
     private String name;
-    private Position latestPosition;
+    private Positions latestPosition;
 	
 
 }

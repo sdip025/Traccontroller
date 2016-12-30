@@ -12,7 +12,7 @@ var map;
 function initialize() {
   var mapOptions = {
     zoom: 8,
-    center: new google.maps.LatLng(22.473613646596526,88.4000322222732)
+    center: new google.maps.LatLng("${user.latitude}","${user.longitude}")
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
@@ -22,7 +22,13 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </head>
 <body>
-<h1>Welcome</h1>
+<h1>Welcome</h1><p>${serverTime}</p><p>${serv}</p>
+<c:forEach items="${serve}" var="user">
+
+<p>${user.latitude}</p>
+<p>${user.longitude}</p>
+</c:forEach>
  <div id="map-canvas" style="height:600px; width:900px"></div>
+ 
 </body>
 </html>

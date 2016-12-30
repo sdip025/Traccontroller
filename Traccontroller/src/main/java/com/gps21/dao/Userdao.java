@@ -2,12 +2,13 @@ package com.gps21.dao;
 
 import java.util.List;
 
-import com.gps21.model.Position;
+
+import com.gps21.model.Positions;
 
 
 
 public interface Userdao {
 	
-	public List<Position>list();
+	public List<Positions>plist();
 	
 	}

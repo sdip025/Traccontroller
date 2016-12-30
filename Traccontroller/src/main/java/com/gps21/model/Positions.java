@@ -3,25 +3,27 @@ package com.gps21.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+
 @Table(name="positions")
-public class Position implements  Serializable ,Cloneable{
+@Entity
+public class Positions implements  Serializable ,Cloneable{
 	
 	 private static final long serialVersionUID = 1L;
 	
-     public  Position(){
+     public  Positions(){
 	
      }
 
-     public Position(Position position){
+     public Positions(Positions position){
 	
 	   id = position.id;
-       device = position.device;
+     
        time = position.time;
        valid = position.valid;
        latitude = position.latitude;
@@ -35,11 +37,12 @@ public class Position implements  Serializable ,Cloneable{
 	
      }
      @Id
-     @GeneratedValue
+    @GeneratedValue
      private long id;
-     private Device device; 
+ 
      private Date time;
      private Boolean valid;
+   
      private Double latitude;
      private Double longitude;
      private Double altitude;
@@ -56,13 +59,7 @@ public void setId(long id) {
 	this.id = id;
 }
 
-public Device getDevice() {
-	return device;
-}
 
-public void setDevice(Device device) {
-	this.device = device;
-}
 
 public Date getTime() {
 	return time;
