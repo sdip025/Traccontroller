@@ -1,34 +1,40 @@
 var cities = [
     {
-        city : 'Toronto',
-        desc : 'This is the best city in the world!',
-        lat : 43.7000,
-        long : -79.4000
+        city : 'Kolkata',
+        desc : 'This is the Funny city in the world!',
+        lat : 22.5726,
+        long : 88.3639
     },
     {
-        city : 'New York',
-        desc : 'This city is aiiiiite!',
-        lat : 40.6700,
-        long : -73.9400
+        city : 'Digha',
+        desc : 'This city is sea!',
+        lat : 21.6266,
+        long : 87.5074
     },
     {
-        city : 'Chicago',
-        desc : 'This is the second best city in the world!',
-        lat : 41.8819,
-        long : -87.6278
+        city : 'Midnapur',
+        desc : 'This is city  of forest!',
+        lat : 22.4309,
+        long : 87.3215
     },
     {
-        city : 'Los Angeles',
-        desc : 'This city is live!',
-        lat : 34.0500,
-        long : -118.2500
+    	city:'Kashmir',
+    	desc:'This is the city of Beauty',
+    	lat: 33.7782,
+    	long:76.5762
+    	
+    	
     },
     {
-        city : 'Las Vegas',
-        desc : 'Sin City...\'nuff said!',
-        lat : 36.0800,
-        long : -115.1522
+    	city:'Mumbai',
+    	desc:'This is the Top city of India',
+    	lat: 19.0760,
+    	long:72.8777
+    	
+    	
+    	
     }
+    
 ];
 
 //Angular App Module and Controller
@@ -37,7 +43,7 @@ angular.module('mapsApp', [])
 
     var mapOptions = {
         zoom: 4,
-        center: new google.maps.LatLng(40.0000, -98.0000),
+        center: new google.maps.LatLng(22.5726, 88.3639),
         mapTypeId: google.maps.MapTypeId.TERRAIN
     }
 
