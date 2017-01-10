@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.List;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,10 +50,6 @@ public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
-		
-	
-		
-		
 		String abc ="gps21 test india";
 		List<String>lst=new ArrayList<String>();
 		lst.add("A");
@@ -69,10 +66,13 @@ public class HomeController {
 		model.addAttribute("serve", uservice.plist() );
 		
 		return "home";
+		
+		
+		
+		
 	}
 	
 
-	
 	
 	
 	
