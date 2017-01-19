@@ -42,7 +42,7 @@ public class Positions implements  Serializable ,Cloneable{
  
      private Date time;
      private Boolean valid;
-   
+    
      private Double latitude;
      private Double longitude;
      private Double altitude;
