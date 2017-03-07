@@ -1,54 +1,91 @@
-var myangu = angular.module('mapsApp', []).controller(
-		'MapCtrl',
-		function($scope, $http) {
+var myangu = angular
+		.module('mapsApp', [])
+		.controller(
+				'MapCtrl',
+				function($scope, $http) {
 
-			var mapOptions = {
-				zoom : 4,
-				center : new google.maps.LatLng(22.5726, 88.3639),
-				mapTypeId : google.maps.MapTypeId.ROADMAP
+					this.tab = 1;
 
-			};
+					this.setTab = function(tabId) {
+						this.tab = tabId;
+					};
 
-			$http.get("/java/position").then(
-					function(positionlist) {
-						$scope.polist = null;
-						alert(JSON.stringify(positionlist));
-						$scope.polist = positionlist.data;
-						alert(JSON.stringify(positionlist.latitude));
+					this.isSet = function(tabId) {
+						return this.tab === tabId;
+					};
 
-						console.log($scope.polist.length);
-						$scope.map = new google.maps.Map(document
-								.getElementById('map'), mapOptions);
+					var mapOptions = {
+						zoom : 15,
+						center : new google.maps.LatLng(22.471466666666668, 88.39954333333333),
+						mapTypeId : google.maps.MapTypeId.ROADMAP
 
-						angular.forEach($scope.polist, function(value) {
+					};
+					$scope.map = new google.maps.Map(document
+							.getElementById('map'), mapOptions);
+					$scope.markers = [];
+					$scope.astatus = true;
 
-							var mylatlng = new google.maps.LatLng({
-								
-								lat : value.latitude,
-								lng : value.longitude,
-								title : value.address
+					$http
+							.get("/java/position")
+							.then(
+									function(positionlist) {
 
-							});
+										// alert(JSON.stringify(positionlist));
+										$scope.polist = positionlist.data;
 
-							
-							console.log(mylatlng);
-						});
-						
-						 
-					    
+										var positionmark = function(value) {
+											 //alert(JSON.stringify(value.latitude+" "+value.longitude+" "+value.address));
+											var marker = new google.maps.Marker(
+													{
 
-						function mker(mylatlng) {
-							
+														position : new google.maps.LatLng(
+																value.latitude,
+																value.longitude),
+														map : $scope.map,
+														title : value.address
 
-							var marker = new google.maps.Marker({
-								position : mylatlng,
-								map : $scope.map,
-								title : 'welcome'
+													});
+											marker.content = '<div class="infoWindowContent">'
+													+ value.address + '</div>';
 
-							});
+											google.maps.event
+													.addListener(
+															marker,
+															'click',
+															function() {
+																infoWindow
+																		.setContent('<h2>'
+																				+ marker.title
+																				+ '</h2>'
+																				+ marker.content);
+																infoWindow
+																		.open(
+																				$scope.map,
+																				marker);
+															});
+											$scope.markers.push(marker);
+
+										};
+										/*
+										 * Retrive Value And Stored it inside
+										 * "Value"
+										 */
+										for (var i = 0, len = $scope.polist.length; i < len; i++) {
+											var value = $scope.polist[i];
+											console.log("welcome" + value);
+											positionmark(value);
+
+										}
+
+									});
+				/*	$http.get("/java/dlist").then(function(dlist) {
+						alert(JSON.stringify(dlist));
+						$scope.delist = dlist.data;
+						for (var i = 0,len = $scope.delist.length; i<len; i++) {
+							var udlist = $scope.delist[i];
 
 						}
 
-					});
+					});*/
 
-		});
+				});

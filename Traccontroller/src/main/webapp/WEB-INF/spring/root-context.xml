@@ -22,7 +22,10 @@
 	<property name="annotatedClasses">
 	<list>
 	<value>com.gps21.model.Positions</value>
-	
+	<value>com.gps21.model.User</value>
+	<value>com.gps21.model.Device</value>
+	<value>com.gps21.model.Userdevice</value>
+	<!-- <value>com.gps21.model.Userdevice</value> -->
 	</list>
      </property>
       <property name="hibernateProperties">

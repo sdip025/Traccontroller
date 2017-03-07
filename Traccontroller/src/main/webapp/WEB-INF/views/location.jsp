@@ -29,6 +29,7 @@
 
 <p id="latt">Lat: ${user.latitude}</p>
 <p>Long: ${user.longitude}</p>
+<p>Long: ${user.address}</p>
 </c:forEach>
 
 

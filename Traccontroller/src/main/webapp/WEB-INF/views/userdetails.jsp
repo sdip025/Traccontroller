@@ -8,26 +8,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<style type="text/css">
-
-.div-table-rowo{
-  display:table-row;
-  width:100%
-  clear:both;
-   align:center;
-}
-
-
-
-</style>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-
-    <link rel="stylesheet" href="/maps/documentation/javascript/demos/demos.css">
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
+ <script>
       function initMap() {
         var chicago = {lat: 41.85, lng: -87.65};
         var indianapolis = {lat: 39.79, lng: -86.14};
@@ -61,6 +42,26 @@
 
     </script>
 
+<style type="text/css">
 
+.div-table-rowo{
+  display:table-row;
+  width:100%
+  clear:both;
+   align:center;
+}
+
+
+
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+
+    <link rel="stylesheet" href="/maps/documentation/javascript/demos/demos.css">
+  </head>
+  <body>
+    <div id="map"></div>
+   
+<h1>Welcome</h1>
 </body>
 </html>
