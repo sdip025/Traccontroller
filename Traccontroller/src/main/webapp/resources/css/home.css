@@ -1,0 +1,353 @@
+divTable1{
+	display: table;
+	width: 100%;
+}
+.divTableRow1 {
+	display: table-row;
+}
+.divTableHeading1 {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell1, .divTableHead1 {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+	width: 79%;
+}
+.divTableCell2, .divTableHead2  {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+	width: 30%;
+}
+
+.divTableHeading1 {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot1 {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody1 {
+	display: table-row-group;
+}
+
+.divTable{
+	background-color:#4169e1;
+
+	display: table;
+	width: 100%;
+	height: 3%;
+}
+.divTableRow {
+	display: table-row;
+	width: 100%;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	
+}
+.divTableCell, .divTableHead {
+	
+	display: table-cell;
+	padding: .3% .5%;
+	width:40%;
+	
+	text-align: center;
+	font-size: small;
+	font-family: fantasy;
+	
+}
+.divTableCell3, .divTableHead3 {
+	
+	display: table-cell;
+	padding: .3% .5%;
+	width:150%;
+	height:2px;
+	text-align: center;
+	font-size: small;
+	font-family: fantasy;
+	
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    float: right;
+    border: 1px solid #000;
+    border-bottom-width: 0;
+    margin: 3px 3px 0px 3px;
+    padding: 5px 5px 0px 5px;
+    background-color: #CCC;
+    color: #696969;
+}
+#mainView {
+    border: 1px solid black;
+	clear: both;
+	padding: 0 1em;
+}
+.active {
+    background-color: #FFF;
+    color: #000;
+}
+.dip{
+	float: right;
+	left: 30%;
+	width: 80%;
+	height: 90%;
+	
+	border: thin;
+	
+	
+}
+
+.divT{
+	display: table;
+	width: 20%;
+	height: 90%;
+	
+	float: left;
+}
+.divTableR {
+	display: table-row;
+	width: 100%;
+}
+
+.divTableCe, .divTableHead {
+	border: 9px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+	width: 22%;
+}
+.divTableC, .divTableH {
+	border: 3px solid #999999;
+	display: table-cell;
+
+	padding: .3% .5%;
+	width:78%;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableF {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableB {
+	display: table-row-group;
+}
+
+
+
+
+
+.divTab{
+	display: table;
+	width: 100%;
+	height:100%;
+}
+.divTRow {
+	display: table-row;
+	height: 50%;
+}
+
+.divTCell, .divTableHe {
+	border: .5px solid #999999;
+	display: table-cell;
+	padding: .3% .5%;
+	height: 50%;
+}
+.divTableHe {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableF {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTB{
+	display: table-row-group;
+	width: 100%;
+	height: 100%;
+}
+
+div Table1{
+	display: table;
+	width: 100%;
+}
+.divTableRow1 {
+	display: table-row;
+}
+.divTableHeading1 {
+	background-color: #EEE;
+	display: table-header-group;
+}
+.divTableCell1, .divTableHead1 {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+	width: 79%;
+}
+.divTableCell2, .divTableHead2  {
+	border: 1px solid #999999;
+	display: table-cell;
+	padding: 3px 10px;
+	width: 30%;
+}
+
+.divTableHeading1 {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot1 {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody1 {
+	display: table-row-group;
+}
+
+.divTable{
+	background-color:#4169e1;
+
+	display: table;
+	width: 100%;
+	height: 3%;
+}
+.divTableRow {
+	display: table-row;
+	width: 100%;
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	
+}
+.divTableCell, .divTableHead {
+	
+	display: table-cell;
+	padding: .3% .5%;
+	width:40%;
+	
+	text-align: center;
+	font-size: small;
+	font-family: fantasy;
+	
+}
+.divTableCell3, .divTableHead3 {
+	
+	display: table-cell;
+	padding: .3% .5%;
+	width:150%;
+	height:2px;
+	text-align: center;
+	font-size: small;
+	font-family: fantasy;
+	
+}
+.divTableHeading {
+	background-color: #EEE;
+	display: table-header-group;
+	font-weight: bold;
+}
+.divTableFoot {
+	background-color: #EEE;
+	display: table-footer-group;
+	font-weight: bold;
+}
+.divTableBody {
+	display: table-row-group;
+}
+
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+li {
+    float: right;
+    border: 1px solid #000;
+    border-bottom-width: 0;
+    margin: 3px 3px 0px 3px;
+    padding: 5px 5px 0px 5px;
+    background-color: #CCC;
+    color: #696969;
+}
+#mainView {
+    border: 1px solid black;
+	clear: both;
+	padding: 0 1em;
+}
+.active {
+    background-color: #FFF;
+    color: #000;
+}
+#top-left {
+    background-color: blue;
+    height: 100%;
+    border: medium;
+}
+
+
+#bottom-left {
+    background-color: green;
+    height: 40%;
+    width:100%;
+    position: absolute;
+    bottom: 0px;
+}
+
+#left-col{
+    position: absolute;
+    overflow: auto;
+    right: 70%;
+    left: 0;
+    top: 12.5%;
+    bottom: 30px;
+    background: #aabbcc; 
+    height: 100%; }
+
+#right-col {
+    position:absolute;
+    overflow: auto;
+    left: 30%;
+    right: 0;
+    top: 12.5%;
+    bottom: 30px;   
+    width: 70%;
+    height: 100%; 
+    background-color: orange; }
+
+
+
+
