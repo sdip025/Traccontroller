@@ -1,9 +1,7 @@
 package com.gps21.java;
 
 import java.util.ArrayList;
-
 import java.util.Locale;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,10 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.gps21.model.Devices;
 import com.gps21.Services.UserService;
-import com.gps21.model.Device;
-import com.gps21.model.Positions;
-import com.gps21.model.User;
+import com.gps21.model.Users;
 
 /**
  * Handles requests for the application home page.
@@ -68,32 +65,36 @@ public class HomeController {
 		return "location";
 	}
 
-	@RequestMapping(value = "/loginre", method = RequestMethod.POST)
-	public String loginresult(@ModelAttribute("userlog") User userlog,
+	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
+	public String loginresult(@ModelAttribute("userlog") Users userlog,
 			ModelMap map, HttpSession session) {
-		System.out.println("controller read " + userlog.getUsername() + " "
+		System.out.println("controller read " + userlog.getLogin() + " "
 				+ userlog.getPassword());
-		if (uservice.userauthentication(userlog.getUsername(),
+		if (uservice.userauthentication(userlog.getLogin(),
 				userlog.getPassword()) != null) {
 
-			// session.setAttribute("username", userlog.getUsername());
-
-			map.addAttribute("username", userlog.getUsername());
+			map.addAttribute("username", userlog.getLogin());
 
 			return "home";
 
 		}
 
 		else {
-			System.out.println("cannot read " + userlog.getUsername() + " "
+			System.out.println("cannot read " + userlog.getLogin() + " "
 					+ userlog.getPassword());
 
-			System.out.println("cannot read "
+			System.out.println("cannot read userauthentication "
 					+ uservice.userauthentication(userlog.getPassword(),
-							userlog.getUsername()));
+							userlog.getLogin()));
 			map.put("errormessage", "Invalid Account");
 			return "login";
 		}
+	}
+
+	@RequestMapping(value = "/position", method = RequestMethod.GET)
+	public String devicelist() {
+
+		return null;
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -106,15 +107,17 @@ public class HomeController {
 		return "redirect:login";
 	}
 
-	@ResponseBody
-	@RequestMapping(value = "/position", method = RequestMethod.GET, produces = "application/json")
-	public List<Positions> getlocation() {
-		return uservice.plist();
-	}
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value = "/position", method = RequestMethod.GET, produces
+	 * = "application/json") public List<Positions> getlocation() { return
+	 * uservice.plist(); }
+	 */
 
 	@ResponseBody
 	@RequestMapping(value = "/dlist", method = RequestMethod.GET, produces = "application/json")
-	public ArrayList<Device> devicelist(HttpSession session) {
+	public ArrayList<Devices> devicelist(HttpSession session) {
 
 		String uname = (String) session.getAttribute("username");
 		System.out.print("Session Value" + uname);

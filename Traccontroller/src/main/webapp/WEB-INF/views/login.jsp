@@ -19,7 +19,7 @@
 <body>
 <div class="mainbody">
 <p><%=session.getAttribute("username") %></p>
-	<form action="/java/loginre" method="post">
+	<form action="/java/loginpage" method="post">
 	
 	<p>${errormessage} </p>
 		<div class="imgcontainer">
@@ -28,7 +28,7 @@
 
 		<div class="container">
 			<label class="fsize"><b>Username</b></label> <input type="text" class="fsize"
-				placeholder="Enter Username" name="username" required> <label class="fsize"><b>Password</b></label>
+				placeholder="Enter Username" name="login" required> <label class="fsize"><b>Password</b></label>
 			<input type="password" class="fsize" placeholder="Enter Password" name="password"
 				required>
 

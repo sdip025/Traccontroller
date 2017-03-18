@@ -1,4 +1,4 @@
-package com.gps21.model;
+package com.gps21.Omodel;
 
 import java.io.Serializable;
 
