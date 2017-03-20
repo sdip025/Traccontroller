@@ -1,6 +1,8 @@
 package com.gps21.java;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -91,10 +93,12 @@ public class HomeController {
 		}
 	}
 
-	@RequestMapping(value = "/position", method = RequestMethod.GET)
-	public String devicelist() {
+	@RequestMapping(value = "/position", method = RequestMethod.GET,produces="application/json")
+	public HashMap<String,List<Devices>> devicelist(HttpSession session) {
+		String username=(String)session.getAttribute("username");
+		System.out.println(username);
 
-		return null;
+		return uservice.devicelist(username);
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -115,14 +119,14 @@ public class HomeController {
 	 * uservice.plist(); }
 	 */
 
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping(value = "/dlist", method = RequestMethod.GET, produces = "application/json")
 	public ArrayList<Devices> devicelist(HttpSession session) {
 
 		String uname = (String) session.getAttribute("username");
 		System.out.print("Session Value" + uname);
 		return uservice.dlist(uname);
-	}
+	}*/
 
 	/*
 	 * @RequestMapping(value="/dlist" , method=RequestMethod.POST ) public

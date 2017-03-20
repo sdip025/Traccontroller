@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>GPS21 NET INDIA SER.</title>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/JS/angular/angular.min.js"/>"></script>
 <script
@@ -16,6 +17,8 @@
 	src="<c:url value="/resources/JS/angular/Ajscript.js"/>"></script>
 <script type="text/javascript"
 	src="<c:url value="/resources/JS/angular/devicelist.js"/>"></script>
+<script type="text/javascript"
+	src="<c:url value="/resources/JS/angular/home.js"/>"></script>
 <link href="<c:url value="/resources/css/home.css" />" rel="stylesheet">
 <link href="<c:url value="/resources/css/map.css" />" rel="stylesheet">
 <script type="text/javascript"
@@ -45,7 +48,9 @@
 	color: red;
 }
 </style>
-
+<script type="text/javascript">
+	
+</script>
 
 </head>
 <body>
@@ -68,7 +73,10 @@
 										<p>Account</p>
 									</div>
 									<div class="divTableCell">Message</div>
-									<div class="divTableCell">Change Password</div>
+									<div class="divTableCell">
+										<li ng-class="{active:tab.isSet(4)}"><a href
+											ng-click="tab.setTab(4)">Change Password</a></li>
+									</div>
 									<div class="divTableCell">
 										<a href="${pageContext.request.contextPath}/logout">Logout</a>
 									</div>
@@ -93,6 +101,7 @@
 												<li ng-class="{active:tab.isSet(3)}"><a href
 													ng-click="tab.setTab(3)">More</a></li>
 											</div>
+
 										</ul>
 
 
@@ -205,29 +214,148 @@
 						</div>
 					</td>
 				</tr>
-
-
 			</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		</div>
 
 		<div ng-show="tab.isSet(3)">
 			<h4>Tab 3</h4>
+		</div>
+		<div ng-show="tab.isSet(4)">
+			<div class="container">
+
+				<ul class="nav nav-pills">
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(5 )}"><a href
+							ng-click="tab.setTab(5)">My Account </a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(6)}"><a href
+							ng-click="tab.setTab(6)">Change Password</a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(7)}"><a href
+							ng-click="tab.setTab(7)">My Service</a></li>
+					</div>
+
+				</ul>
+
+
+
+			</div>
+		</div>
+		<div ng-show="tab.isSet(5)">
+
+
+			<div class="container">
+
+				<ul class="nav nav-pills">
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(5 )}"><a href
+							ng-click="tab.setTab(5)">My Account </a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(6)}"><a href
+							ng-click="tab.setTab(6)">Change Password</a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(7)}"><a href
+							ng-click="tab.setTab(7)">My Service</a></li>
+					</div>
+
+				</ul>
+
+
+
+			</div>
+			<div>Tab 6</div>
+
+		</div>
+		<div ng-show="tab.isSet(6)">
+			<div class="container">
+
+				<ul class="nav nav-pills">
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(5 )}"><a href
+							ng-click="tab.setTab(5)">My Account </a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(6)}"><a href
+							ng-click="tab.setTab(6)">Change Password</a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(7)}"><a href
+							ng-click="tab.setTab(7)">My Service</a></li>
+					</div>
+
+				</ul>
+
+
+
+			</div>
+
+			<div class="divTable1" align="center">
+				<div class="divTablebody">
+					<div class="divTableRow">
+						<div class="divTableCell">Existed password:</div>
+						<div class="divTableCell">
+							<input type="password" placeholder="Existed Password"
+								id="Existedpw">
+						</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell">New password:</div>
+						<div class="divTableCell">
+							<input type="password" placeholder="New Password" 
+								id="newpw">
+						</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell">Password Confirmation:</div>
+						<div class="divTableCell">
+							<input type="password" placeholder="Confirm Password "
+								id="confirmpw">
+						</div>
+					</div>
+					<div class="divTableRow">
+						<div class="divTableCell">Save</div>
+						<div class="divTableCell">
+							<input type="submit" id="pwsubmit" name="Submit">
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+		</div>
+
+
+
+
+
+		<div ng-show="tab.isSet(7)">
+			<div class="container">
+
+				<ul class="nav nav-pills">
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(5 )}"><a href
+							ng-click="tab.setTab(5)">My Account </a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(6)}"><a href
+							ng-click="tab.setTab(6)">Change Password</a></li>
+					</div>
+					<div class="divTableCell">
+						<li ng-class="{active:tab.isSet(7)}"><a href
+							ng-click="tab.setTab(7)">My Service</a></li>
+					</div>
+
+				</ul>
+
+
+
+			</div>
 		</div>
 
 	</div>

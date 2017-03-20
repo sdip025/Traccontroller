@@ -1,4 +1,4 @@
-package com.gps21.Omodel;
+package com.gps21.model;
 
 import java.io.Serializable;
 
@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "users_devices", catalog = "traccar")
+@Table(name = "users_devices" , catalog = "traccar")
 public class Userdevice implements Serializable {
 
 	private static final long serialVersionUID = 1L;

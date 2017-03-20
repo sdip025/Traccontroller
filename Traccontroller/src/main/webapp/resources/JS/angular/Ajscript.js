@@ -30,7 +30,7 @@ var myangu = angular
 							.then(
 									function(positionlist) {
 
-										// alert(JSON.stringify(positionlist));
+										 alert(JSON.stringify(positionlist));
 										$scope.polist = positionlist.data;
 
 										var positionmark = function(value) {

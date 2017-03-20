@@ -75,7 +75,7 @@ public class Daoimpl implements Userdao {
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Devices> dlist(String uname) {
-		String ldevice = "select  d.name from  devices d where d.id in  ( select ud.devices_id from users_devices ud where ud.users_id=(select u.id from users u where u.login='"
+		String ldevice = "select  d.name from  Devices d where d.id in  ( select ud.devices_id from users_devices ud where ud.users_id=(select u.id from Users u where u.login='"
 				+ uname + "' ))";
 		
 
