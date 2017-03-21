@@ -18,20 +18,17 @@ public class UserComposite implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "users_id")
+	
 	private Users users;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "devices_id")
+	
 	private Devices devices;
 	
-	public UserComposite(Users users, Devices devices) {
-		super();
-		this.users = users;
-		this.devices = devices;
-	}
-
+	
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "users_id")
 	public Users getUsers() {
 		return users;
 	}
@@ -51,14 +48,20 @@ public class UserComposite implements Serializable {
 	private long users_id;
 	private long devices_id;
 
+
+
 	public UserComposite() {
-	};
-
-	public UserComposite(long users_id, long devices_id) {
-		this.users_id = users_id;
-		this.devices_id = devices_id;
+		
 	}
-
+	
+	public  UserComposite(long users_id,long devices_id){
+		this.users_id=users_id;
+		this.devices_id=devices_id;
+		
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "devices_id")
 	public long getUsers_id() {
 		return users_id;
 	}

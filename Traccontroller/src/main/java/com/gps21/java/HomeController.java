@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.gps21.model.Devices;
+import com.gps21.model.Home;
 import com.gps21.Services.UserService;
 import com.gps21.model.Users;
 
@@ -93,13 +96,13 @@ public class HomeController {
 		}
 	}
 
-	@RequestMapping(value = "/position", method = RequestMethod.GET,produces="application/json")
+	/*@RequestMapping(value = "/position", method = RequestMethod.GET,produces="application/json")
 	public HashMap<String,List<Devices>> devicelist(HttpSession session) {
 		String username=(String)session.getAttribute("username");
 		System.out.println(username);
 
 		return uservice.devicelist(username);
-	}
+	}*/
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(Model model, HttpSession sessions) {
@@ -110,7 +113,28 @@ public class HomeController {
 		System.out.println("logout");
 		return "redirect:login";
 	}
-
+   
+	@RequestMapping(value="/changepassword",method=RequestMethod.POST)
+	public String changepassword(@Valid @ModelAttribute("home") Home home,BindingResult res){
+		
+		if (res.hasErrors()) {
+			System.out.println("ChangePassword" +home.getConfirmpassword());
+			
+			
+			
+		}
+		
+	
+		
+		
+		return "home";	
+	}
+	
+	
+	
+	
+	
+	
 	/*
 	 * @ResponseBody
 	 * 
