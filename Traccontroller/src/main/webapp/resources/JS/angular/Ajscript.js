@@ -94,7 +94,7 @@ myangu.controller(
 
 
 
-/*Change password*/
+/*Change password alert*/
 myangu.controller('account', function($scope) {
 	
 	
