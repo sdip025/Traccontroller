@@ -1,23 +1,23 @@
 package com.gps21.Services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-
-
-
-
-
-import com.gps21.model.Device;
+import com.gps21.model.Devices;
+import com.gps21.model.Users;
 import com.gps21.model.Positions;
-import com.gps21.model.User;
-
 
 
 public interface UserService {
-	public List<Positions>plist();
-	public List<User>ulList();
-	public User userauthentication(String login, String password);
-	public ArrayList<Device>dlist(String uname);
+	public List<Positions> plist();
+
+	public List<Users> ulList();
+
+	public Users userauthentication(String login, String password);
+
+	public ArrayList<Devices> dlist(String uname);
+	
+	public HashMap<String, List<Devices>> devicelist(String username);
 
 }

@@ -3,6 +3,9 @@ package com.gps21.model;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 
 @Embeddable
@@ -13,17 +16,52 @@ public class UserComposite implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
+	
+	private Users users;
+	
+	
+	private Devices devices;
+	
+	
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "users_id")
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
+
+	public Devices getDevices() {
+		return devices;
+	}
+
+	public void setDevices(Devices devices) {
+		this.devices = devices;
+	}
+
 	private long users_id;
 	private long devices_id;
 
+
+
 	public UserComposite() {
-	};
-
-	public UserComposite(long users_id, long devices_id) {
-		this.users_id = users_id;
-		this.devices_id = devices_id;
+		
 	}
-
+	
+	public  UserComposite(long users_id,long devices_id){
+		this.users_id=users_id;
+		this.devices_id=devices_id;
+		
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "devices_id")
 	public long getUsers_id() {
 		return users_id;
 	}

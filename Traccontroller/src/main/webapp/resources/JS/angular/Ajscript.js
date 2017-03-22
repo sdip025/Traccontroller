@@ -1,6 +1,5 @@
-var myangu = angular
-		.module('mapsApp', [])
-		.controller(
+var myangu = angular.module('mapsApp', []);
+myangu.controller(
 				'MapCtrl',
 				function($scope, $http) {
 
@@ -16,7 +15,8 @@ var myangu = angular
 
 					var mapOptions = {
 						zoom : 15,
-						center : new google.maps.LatLng(22.471466666666668, 88.39954333333333),
+						center : new google.maps.LatLng(22.471466666666668,
+								88.39954333333333),
 						mapTypeId : google.maps.MapTypeId.ROADMAP
 
 					};
@@ -30,11 +30,13 @@ var myangu = angular
 							.then(
 									function(positionlist) {
 
-										// alert(JSON.stringify(positionlist));
+										alert(JSON.stringify(positionlist));
 										$scope.polist = positionlist.data;
 
 										var positionmark = function(value) {
-											 //alert(JSON.stringify(value.latitude+" "+value.longitude+" "+value.address));
+											// alert(JSON.stringify(value.latitude+"
+											// "+value.longitude+"
+											// "+value.address));
 											var marker = new google.maps.Marker(
 													{
 
@@ -78,14 +80,31 @@ var myangu = angular
 										}
 
 									});
-				/*	$http.get("/java/dlist").then(function(dlist) {
-						alert(JSON.stringify(dlist));
-						$scope.delist = dlist.data;
-						for (var i = 0,len = $scope.delist.length; i<len; i++) {
-							var udlist = $scope.delist[i];
-
-						}
-
-					});*/
+					/*
+					 * $http.get("/java/dlist").then(function(dlist) {
+					 * alert(JSON.stringify(dlist)); $scope.delist = dlist.data;
+					 * for (var i = 0,len = $scope.delist.length; i<len; i++) {
+					 * var udlist = $scope.delist[i];
+					 *  }
+					 * 
+					 * });
+					 */
 
 				});
+
+myangu.controller('account', function($scope) {
+	
+	
+	alert($scope)
+	$scope.detailspassword=function(){
+		
+		alert($scope.confirmpassword+""+$scope.newpassword+""+$scope.existedpassword)
+	}
+	
+	
+	
+	
+	
+	
+
+});
