@@ -92,6 +92,9 @@ myangu.controller(
 
 				});
 
+
+
+/*Change password*/
 myangu.controller('account', function($scope) {
 	
 	
