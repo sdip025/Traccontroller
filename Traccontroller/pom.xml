@@ -93,6 +93,9 @@
 			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- hibernate-ehcache -->
+		<!-- EHCache Core APIs -->
+		
 		<!--Json -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -160,6 +163,7 @@
 			<scope>test</scope>
 		</dependency>
 		<!-- Hibernate resources -->
+		
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>

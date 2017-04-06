@@ -1,4 +1,4 @@
-package com.gps21.Services;
+package com.gps21.ServiceImp;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.gps21.model.Devices;
 import com.gps21.Services.UserService;
 import com.gps21.dao.Userdao;
+import com.gps21.model.Changepassword;
 import com.gps21.model.Positions;
 import com.gps21.model.Users;
 
@@ -51,4 +52,16 @@ public class UserServiceImpl implements UserService {
 		return devicelist;
 	}
 
+	@Override
+	public String updatepassword(Changepassword users) {
+		
+		return udo.updatepassword(users);
+	}
+
+	/*@Override
+	public String changepassword(String uname) {
+	
+		return udo.changepassword(uname);
+	}
+*/
 }

@@ -1,5 +1,6 @@
 var myangu = angular.module('mapsApp', []);
-myangu.controller(
+myangu
+		.controller(
 				'MapCtrl',
 				function($scope, $http) {
 
@@ -69,8 +70,9 @@ myangu.controller(
 
 										};
 										/*
-										 * Retrive Value And Stored it inside
-										 * "Value"
+										 * Retrieve Value And Stored it inside a
+										 * variable.
+										 * 
 										 */
 										for (var i = 0, len = $scope.polist.length; i < len; i++) {
 											var value = $scope.polist[i];
@@ -80,34 +82,32 @@ myangu.controller(
 										}
 
 									});
-					/*
-					 * $http.get("/java/dlist").then(function(dlist) {
-					 * alert(JSON.stringify(dlist)); $scope.delist = dlist.data;
-					 * for (var i = 0,len = $scope.delist.length; i<len; i++) {
-					 * var udlist = $scope.delist[i];
-					 *  }
-					 * 
-					 * });
-					 */
+					
+					  $http.get("/java/dlist").then(function(dlist) {
+					  alert(JSON.stringify(dlist)); $scope.delist = dlist.data;
+					  for (var i = 0,len = $scope.delist.length; i<len; i++) {
+					  var udlist = $scope.delist[i]; }
+					  
+					  });
+					 
 
 				});
 
 
+myangu.controller('account', ['$scope', '$http', function ($scope, $http) {
+    $scope.detailspassword = function () {
+    	var data = sessionStorage.getItem('username');
+       /* alert($scope.confirmpassword + "" + $scope.newpassword + "" + $scope.existedpassword);*/
+        var formData = { confirmpassword: $scope.confirmpassword, newpassword: $scope.newpassword, existedpassword: $scope.existedpassword,username:$scope.username };
 
-/*Change password alert*/
-myangu.controller('account', function($scope) {
-	
-	
-	alert($scope)
-	$scope.detailspassword=function(){
-		
-		alert($scope.confirmpassword+""+$scope.newpassword+""+$scope.existedpassword)
-	}
-	
-	
-	
-	
-	
-	
-
-});
+        var error = function (responce) {
+            $scope.errormessage = "Unsuccessful";
+            console.log("Unsuccessful");
+        };
+        var submitvalue = function (request) {
+        	 console.log("successful");
+            $scope.success = "success";
+        };
+        $http.post('/java/updatepassword',formData).then(submitvalue, error);
+    };
+}]);

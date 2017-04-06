@@ -1,3 +1,5 @@
+<%@page import="com.gps21.model.Changepassword"%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -300,9 +302,27 @@
 				<div class="divTable1" align="center">
 					<div class="divTablebody">
 					<div  ng-controller="account">
-						<%-- <form:form action="/java/changepassword"  method="POST" > --%>
+						 <form ng-submit="detailspassword()"> 
+						 <div><%Changepassword chpass=new Changepassword();%><%=chpass.getMessage() %></div>
+						<div>{{errormessage}}</div>
+						<div>${messagee} </div>
 						<div class="divTableRow">
-							<div class="divTableCell">Existed password:</div>
+						
+						
+							<div class="divTableCell">User Name:</div>
+							<div class="divTableCell">
+								<input type="text" id="username" value="<%=session.getAttribute("username")%>" ng-init="username = '<%=session.getAttribute("username")%>'"   readonly="readonly">
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						
+						<div class="divTableRow">
+						<div class="divTableCell">Existed password:</div>
 							<div class="divTableCell">
 								<input type="password" placeholder="Existed Password"
 									id="Existedpw" ng-model="existedpassword">
@@ -325,10 +345,10 @@
 						<div class="divTableRow">
 							<div class="divTableCell">Save</div>
 							<div class="divTableCell">
-								<input type="submit" id="pwsubmit" ng-click="detailspassword()" name="Submit">
+								<input type="submit" id="pwsubmit" name="Submit">
 							</div>
 						</div>
-						<%-- </form:form> --%>
+						 </form>
 					</div>
                </div>
 				</div>

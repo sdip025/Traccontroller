@@ -1,4 +1,4 @@
-var device = angular.model('devicelist', []).controller('devicecontoller',
+var device = angular.module('devicelist', []).controller('devicecontoller',
 		function($scope, $http) {
 
 			$http.get("/java/dlist").then(function(dlist) {

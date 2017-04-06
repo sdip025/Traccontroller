@@ -27,7 +27,7 @@
 	<value>com.gps21.model.Positions</value>
 	<value>com.gps21.model.DeviceIcons</value>
 	<value>com.gps21.model.ApplicationSettings</value>
-	<value>com.gps21.model.Devices</value>
+	
 	<value>com.gps21.model.Events</value>
 	<value>com.gps21.model.Geofences</value>
 	<value>com.gps21.model.Groups</value>
@@ -40,8 +40,8 @@
 	<value>com.gps21.model.Test</value>
 	<value>com.gps21.model.UiState</value>
 	<value>com.gps21.model.Users</value>
-	<value>com.gps21.model.Userdevice</value>
-	<value>com.gps21.model.UserComposite</value>
+	<!-- <value>com.gps21.model.Userdevice</value> -->
+    <!-- 	<value>com.gps21.model.UserComposite</value> -->
 	<value>com.gps21.model.UserSettings</value>
 	<value>com.gps21.model.UsersNotifications</value>
 	<value>com.gps21.model.UsersNotificationsId</value>
@@ -53,13 +53,27 @@
 	<value>com.gps21.model.Userdevice</value> -->
 	</list>
      </property>
-      <property name="hibernateProperties">
+     <property name="hibernateProperties">
+        <value>
+            hibernate.format_sql=true
+            hibernate.show_sql=true
+            hibernate.cache.use_second_level_cache=false
+            hibernate.cache.use_query_cache=false
+            hibernate.generate_statistics=true
+            org.hibernate.cache.ehcache.configurationResourceName=/ehcache.xml
+            hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+        </value>
+    </property>
+      <!-- <property name="hibernateProperties">
     <props >
    
     <prop key="hibernate.dialect">${jdbc.dialect}</prop>
-    <prop key="hibernate.show_sql">true</prop>
+    <prop key="hibernate.show_sql">false</prop>
+    <prop key="hibernate.cache.use_query_cache">true</prop>
+    <prop key="hibernate.cache.use_second_level_cache">true</prop>
+    <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
    </props>
-   </property>
+   </property> -->
 </bean>	
 
 	<tx:annotation-driven transaction-manager="transactionManager"/>

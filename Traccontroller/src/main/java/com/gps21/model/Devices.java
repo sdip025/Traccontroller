@@ -421,7 +421,7 @@ public class Devices implements java.io.Serializable {
 		this.geofenceses = geofenceses;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "users_devices", catalog = "traccar", joinColumns = { @JoinColumn(name = "devices_id", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "users_id", nullable = false, updatable = false) })
 	public Set<Users> getUserses() {
 		return this.userses;

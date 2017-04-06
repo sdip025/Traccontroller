@@ -1,6 +1,7 @@
 package com.gps21.Omodel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -53,6 +54,9 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	
+	private List<String> users=new ArrayList<String>();
 	  @JsonBackReference
 	  
 	  @OneToMany(fetch=FetchType.LAZY)

@@ -10,7 +10,7 @@ $(document).ready(
 								|| confpassword.length == 0) {
 							alert("Please Enter Valid Password" + oldpassword
 									+ "" + newpassword + "" + confpassword);
-
+                        
 						}
 						else if(oldpassword == newpassword ){
 							alert("Please Enter a new Password");

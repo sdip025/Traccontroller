@@ -1,4 +1,4 @@
-package com.gps21.model;
+/*package com.gps21.model;
 
 import java.io.Serializable;
 
@@ -12,9 +12,9 @@ import javax.persistence.ManyToOne;
 public class UserComposite implements Serializable {
 	
 	
-	/**
+	*//**
 	 * 
-	 */
+	 *//*
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -83,3 +83,4 @@ public class UserComposite implements Serializable {
 	
 
 }
+*/

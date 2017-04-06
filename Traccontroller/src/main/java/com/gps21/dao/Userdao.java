@@ -2,9 +2,7 @@ package com.gps21.dao;
 
 import java.util.HashMap;
 import java.util.List;
-
-
-
+import com.gps21.model.Changepassword;
 import com.gps21.model.Devices;
 import com.gps21.model.Users;
 import com.gps21.model.Positions;
@@ -20,7 +18,10 @@ public interface Userdao {
 
 	public List<Devices> dlist(String uname);
 	
-
+    public String updatepassword(Changepassword username);
+    
+	
+    public List<Users>changepassword(String uname);
 	
 	
 

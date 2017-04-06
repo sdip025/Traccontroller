@@ -1,13 +1,14 @@
 package com.gps21.java;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,17 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.gps21.model.Changepassword;
 import com.gps21.model.Devices;
-import com.gps21.model.Home;
+import com.gps21.model.Positions;
 import com.gps21.Services.UserService;
 import com.gps21.model.Users;
 
@@ -62,17 +66,18 @@ public class HomeController {
 		return "redirect:locationpage";
 	}
 
-	@RequestMapping(value = "/locationpage", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/locationpage", method = RequestMethod.GET)
 	public String locationpage(Model model) {
 
 		model.addAttribute("latlong", uservice.plist());
 
 		return "location";
-	}
+	}*/
 
 	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
 	public String loginresult(@ModelAttribute("userlog") Users userlog,
-			ModelMap map, HttpSession session) {
+			ModelMap map, HttpSession session) throws NullPointerException,
+			Exception {
 		System.out.println("controller read " + userlog.getLogin() + " "
 				+ userlog.getPassword());
 		if (uservice.userauthentication(userlog.getLogin(),
@@ -85,6 +90,7 @@ public class HomeController {
 		}
 
 		else {
+
 			System.out.println("cannot read " + userlog.getLogin() + " "
 					+ userlog.getPassword());
 
@@ -96,16 +102,18 @@ public class HomeController {
 		}
 	}
 
-	/*@RequestMapping(value = "/position", method = RequestMethod.GET,produces="application/json")
-	public HashMap<String,List<Devices>> devicelist(HttpSession session) {
-		String username=(String)session.getAttribute("username");
-		System.out.println(username);
-
-		return uservice.devicelist(username);
-	}*/
+	/*
+	 * @RequestMapping(value = "/position", method =
+	 * RequestMethod.GET,produces="application/json") public
+	 * HashMap<String,List<Devices>> devicelist(HttpSession session) { String
+	 * username=(String)session.getAttribute("username");
+	 * System.out.println(username);
+	 * 
+	 * return uservice.devicelist(username); }
+	 */
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logout(Model model, HttpSession sessions) {
+	public String logout(Model model, HttpSession sessions) throws Exception {
 		// sessions.removeAttribute("username");
 		if (model.containsAttribute("username"))
 			model.asMap().remove("username");
@@ -113,53 +121,43 @@ public class HomeController {
 		System.out.println("logout");
 		return "redirect:login";
 	}
-   
-	@RequestMapping(value="/changepassword",method=RequestMethod.POST)
-	public String changepassword(@Valid @ModelAttribute("home") Home home,BindingResult res){
-		
-		if (res.hasErrors()) {
-			System.out.println("ChangePassword" +home.getConfirmpassword());
-			
-			
-			
-		}
-		
-	
-		
-		
-		return "home";	
-	}
-	
-	
-	
-	
-	
-	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value = "/position", method = RequestMethod.GET, produces
-	 * = "application/json") public List<Positions> getlocation() { return
-	 * uservice.plist(); }
-	 */
 
-	/*@ResponseBody
-	@RequestMapping(value = "/dlist", method = RequestMethod.GET, produces = "application/json")
-	public ArrayList<Devices> devicelist(HttpSession session) {
+/*	@RequestMapping(value = "/updatepassword", method = RequestMethod.POST, produces = "application/json")
+	public @ResponseBody
+	String updatepassword(@RequestBody Changepassword users, ModelMap map)
+			throws JSONException, NullPointerException, JsonGenerationException {
 
-		String uname = (String) session.getAttribute("username");
-		System.out.print("Session Value" + uname);
-		return uservice.dlist(uname);
+		System.out.println("Updatedpassword" + users.getConfirmpassword() + "-"
+				+ users.getExistedpassword() + "-" + users.getNewpassword()
+				+ "--" + users.getUsername());
+
+		String message = uservice.updatepassword(users);
+		
+		users.setMessage(message);
+		
+		System.out.println("return value->" + message+"--"+ users.getMessage());
+
+		map.addAttribute("messagee", message);
+		return "home";
 	}*/
 
-	/*
-	 * @RequestMapping(value="/dlist" , method=RequestMethod.POST ) public
-	 * String userdevice(@ModelAttribute("Uname") Device dev){
-	 * 
-	 * 
-	 * 
-	 * 
-	 * return"home"; }
-	 */
+	/*@RequestMapping(value = "/position", method = RequestMethod.GET, produces = "application/json")
+	public List<Positions> getlocation() {
+		return uservice.plist();
+	}*/
+
+	
+	/*  @ResponseBody
+	  
+	  @RequestMapping(value = "/dlist", method = RequestMethod.GET, produces ="application/json") 
+	  public ArrayList<Devices> devicelist(HttpSession  session) {
+	  
+	  String uname = (String) session.getAttribute("username");
+	  System.out.print("Session Value" + uname);
+	  
+	  return uservice.dlist(uname);
+	  }*/
+	 
+
 
 }
