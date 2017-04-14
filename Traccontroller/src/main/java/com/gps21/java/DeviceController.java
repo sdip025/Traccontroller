@@ -14,8 +14,8 @@ import com.gps21.Services.UserService;
 @SessionAttributes("username")
 
 public class DeviceController {
-	@Autowired
-	UserService uservice;
+	/*@Autowired
+	UserService uservice;*/
 	
 	
 	

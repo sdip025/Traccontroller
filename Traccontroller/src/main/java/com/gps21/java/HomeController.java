@@ -39,8 +39,13 @@ import com.gps21.model.Users;
 @EnableWebMvc
 public class HomeController {
 
+	private  UserService uservice;
+
 	@Autowired
-	UserService uservice;
+	void setHomeController(UserService uservice) {
+
+		this.uservice = uservice;
+	}
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(HomeController.class);
@@ -66,13 +71,14 @@ public class HomeController {
 		return "redirect:locationpage";
 	}
 
-	/*@RequestMapping(value = "/locationpage", method = RequestMethod.GET)
-	public String locationpage(Model model) {
-
-		model.addAttribute("latlong", uservice.plist());
-
-		return "location";
-	}*/
+	/*
+	 * @RequestMapping(value = "/locationpage", method = RequestMethod.GET)
+	 * public String locationpage(Model model) {
+	 * 
+	 * model.addAttribute("latlong", uservice.plist());
+	 * 
+	 * return "location"; }
+	 */
 
 	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
 	public String loginresult(@ModelAttribute("userlog") Users userlog,
@@ -102,15 +108,7 @@ public class HomeController {
 		}
 	}
 
-	/*
-	 * @RequestMapping(value = "/position", method =
-	 * RequestMethod.GET,produces="application/json") public
-	 * HashMap<String,List<Devices>> devicelist(HttpSession session) { String
-	 * username=(String)session.getAttribute("username");
-	 * System.out.println(username);
-	 * 
-	 * return uservice.devicelist(username); }
-	 */
+
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(Model model, HttpSession sessions) throws Exception {
@@ -122,7 +120,7 @@ public class HomeController {
 		return "redirect:login";
 	}
 
-/*	@RequestMapping(value = "/updatepassword", method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = "/updatepassword", method = RequestMethod.POST, produces = "application/json")
 	public @ResponseBody
 	String updatepassword(@RequestBody Changepassword users, ModelMap map)
 			throws JSONException, NullPointerException, JsonGenerationException {
@@ -132,32 +130,29 @@ public class HomeController {
 				+ "--" + users.getUsername());
 
 		String message = uservice.updatepassword(users);
-		
+
 		users.setMessage(message);
-		
-		System.out.println("return value->" + message+"--"+ users.getMessage());
+
+		System.out.println("return value->" + message + "--"
+				+ users.getMessage());
 
 		map.addAttribute("messagee", message);
 		return "home";
-	}*/
+	}
 
-	/*@RequestMapping(value = "/position", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/position", method = RequestMethod.GET, produces = "application/json")
 	public List<Positions> getlocation() {
 		return uservice.plist();
-	}*/
+	}
 
-	
-	/*  @ResponseBody
-	  
-	  @RequestMapping(value = "/dlist", method = RequestMethod.GET, produces ="application/json") 
-	  public ArrayList<Devices> devicelist(HttpSession  session) {
-	  
-	  String uname = (String) session.getAttribute("username");
-	  System.out.print("Session Value" + uname);
-	  
-	  return uservice.dlist(uname);
-	  }*/
-	 
+	@ResponseBody
+	@RequestMapping(value = "/dlist", method = RequestMethod.GET, produces = "application/json")
+	public ArrayList<Devices> devicelist(HttpSession session) {
 
+		String uname = (String) session.getAttribute("username");
+		System.out.print("Session Value" + uname);
+
+		return uservice.dlist(uname);
+	}
 
 }

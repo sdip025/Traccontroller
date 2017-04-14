@@ -17,12 +17,9 @@ public interface Userdao {
 	public Users userauthentication(String login, String password);
 
 	public List<Devices> dlist(String uname);
-	
-    public String updatepassword(Changepassword username);
-    
-	
-    public List<Users>changepassword(String uname);
-	
-	
+
+	public String updatepassword(Changepassword username);
+
+	public List<Users> changepassword(String uname);
 
 }

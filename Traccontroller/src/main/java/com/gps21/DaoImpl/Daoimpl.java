@@ -1,25 +1,24 @@
 package com.gps21.DaoImpl;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.TransactionException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateQueryException;
+
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.gps21.model.Changepassword;
 import com.gps21.model.Devices;
 import com.gps21.model.Users;
+import com.gps21.Services.Devicedetails;
 import com.gps21.dao.Userdao;
 import com.gps21.model.Positions;
 
@@ -37,7 +36,8 @@ public class Daoimpl implements Userdao {
 		List<String> list = new ArrayList<String>();
 		String selectposition = " from Positions p where p.id BETWEEN  75215 and  75223";
 
-		List<Positions> plt = session.getCurrentSession().createQuery(selectposition).list();
+		List<Positions> plt = session.getCurrentSession()
+				.createQuery(selectposition).list();
 
 		System.out.println("Position" + selectposition);
 
@@ -66,25 +66,6 @@ public class Daoimpl implements Userdao {
 
 			System.out.println("Try Block" + username + " " + password + " "
 					+ (Users) userlogin.uniqueResult());
-			
-			
-				/*
-				Session se3=session.openSession();
-				Long id1=(long) 22;
-				Devices dee=(Devices)se3.get(Devices.class, id1);
-				System.out.println("Session value2 "+dee.getName()+""+dee.getName());
-				se3.close();
-				Session se5=session.openSession();
-				se5.beginTransaction();
-				Long id5=(long) 3;
-				Devices deee=(Devices)se5.get(Devices.class, id5);
-				System.out.println("Session value3 "+deee.getName()+""+deee.getName());
-				se5.getTransaction().commit();
-				se5.close();
-				Devices Deee=(Devices)se5.get(Devices.class, id5);
-				System.out.println("Session value4 "+Deee.getName()+""+Deee.getName());
-			*/
-			
 
 			return (Users) userlogin.uniqueResult();
 
@@ -97,35 +78,27 @@ public class Daoimpl implements Userdao {
 
 	}
 
-	/* Device List For Every Users. */
+	/* Device List For an Users. */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Devices> dlist(String uname) {
 
-		
-			String ldevice = " from Users u where u.login  =:username ";
+		/*
+		 * String ldevice =
+		 * "select d.name from Users u join u.deviceses_1 d  where u.login  =:username "
+		 * ;
+		 */
 
-			ArrayList<String> devlist = new ArrayList<String>();
-			devlist.add(ldevice);
-			System.out.println("  database ->");
-			HashMap<String, ArrayList<String>> udevicelist = new HashMap<String, ArrayList<String>>();
-			udevicelist.put(uname, devlist);
+		Query que = session.getCurrentSession().getNamedQuery(
+				"Devicelist.Byuname");
+		que.setParameter("username", uname);
+		que.setCacheable(true);
 
-			Query que = session.getCurrentSession().createQuery(ldevice);
-			que.setParameter("username", uname);
+		List<Devices> devicelist = new ArrayList<Devices>();
+		devicelist = que.list();
 
-			List<Devices> devicelist = new ArrayList<Devices>();
-			devicelist = que.list();
-			
-			for (Devices devices : devicelist) {
-				
-				System.out.println("devicename-->"+ devices);
-			}
+		return devicelist;
 
-			return devicelist ;
-			
-		
-		
 	}
 
 	@Override
@@ -136,10 +109,9 @@ public class Daoimpl implements Userdao {
 
 		String passwordmessage = "";
 
-		
-		  System.out.println("username->" + cpw.getUsername() + "--" +
-		  cpw.getConfirmpassword() + "--" + cpw.getExistedpassword());
-		 
+		System.out.println("username->" + cpw.getUsername() + "--"
+				+ cpw.getConfirmpassword() + "--" + cpw.getExistedpassword());
+
 		try {
 
 			String selectpassword = "select  u.password from Users u where u.login= :username";

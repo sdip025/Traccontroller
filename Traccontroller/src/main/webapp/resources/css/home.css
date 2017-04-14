@@ -87,7 +87,9 @@ divTable1{
 .divTableBody {
 	display: table-row-group;
 }
-
+.vis {
+    display: none;
+}
 
 ul {
     list-style: none;

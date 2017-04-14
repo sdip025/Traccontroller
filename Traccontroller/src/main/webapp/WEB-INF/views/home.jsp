@@ -77,7 +77,7 @@
 										</div>
 										<div class="divTableCell">Message</div>
 										<div class="divTableCell">
-											<li ng-class="{active:tab.isSet(4)}"><a 
+											<li ng-class="{active:tab.isSet(4)}"><a
 												ng-click="tab.setTab(4)">Change Password</a></li>
 										</div>
 										<div class="divTableCell">
@@ -91,31 +91,32 @@
 
 										<div class="container">
 
-											
-												<div class="divTableCell">
+
+											<div class="divTableCell">
 												<ul class="nav nav-pills">
-													<li ng-class="{active:tab.isSet(1)}"><a  ng-click="tab.setTab(1)">Monitor</a></li>
-												</ul></div>
-												<div class="divTableCell"><ul class="nav nav-pills">
-													<li ng-class="{active:tab.isSet(2)}"><a 
-														ng-click="tab.setTab(2)">Statistics</a></li></ul>
-												</div>
-												<div class="divTableCell"><ul class="nav nav-pills">
-													<li ng-class="{active:tab.isSet(3)}"><a 
-														ng-click="tab.setTab(3)">More</a></li></ul>
-												</div>
-
-											
-
-
-
+													<li ng-class="{active:tab.isSet(1)}"><a
+														ng-click="tab.setTab(1)">Monitor</a></li>
+												</ul>
+											</div>
+											<div class="divTableCell">
+												<ul class="nav nav-pills">
+													<li ng-class="{active:tab.isSet(2)}"><a
+														ng-click="tab.setTab(2)">Statistics</a></li>
+												</ul>
+											</div>
+											<div class="divTableCell">
+												<ul class="nav nav-pills">
+													<li ng-class="{active:tab.isSet(3)}"><a
+														ng-click="tab.setTab(3)">More</a></li>
+												</ul>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					</div>
+				</div>
 			</header>
 			<div ng-show="tab.isSet(1)">
 				<div class="divT">
@@ -127,19 +128,16 @@
 									<div class="divTB">
 										<div class="divTRow">
 											<div class="divTCell">
-												<a href="javascript:void(0);" ng-click="astatus=false"><%=session.getAttribute("username")%></a>
+												<a href="javascript:void(0);"><%=session.getAttribute("username")%>(/{{delist.length}})</a>
 											</div>
 										</div>
 										<div class="divTRow">
 											<div class="divTCell">
-												<!-- <div ng-repeat="dlist in udlist " >
-										
-										{{dlist.name}}</div> -->
-
-												<div class="section1" ng-show="!astatus">Section 1</div>
 
 
-
+												<div class="section1" ng-repeat="dlist in delist">
+													<a href="">{{dlist}}</a>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -164,7 +162,7 @@
 					<tr>
 						<td>Target Name:<select>
 								<option>Please Select</option>
-								<option></option>
+								<option ng-repeat="dlist in delist ">{{dlist}}</option>
 
 						</select>
 						</td>
@@ -208,10 +206,24 @@
 
 													Fuel Consumption Coefficient/100 Kilometers: <input
 														type="text" name="fuelconsum"><label>L</label>
-													<button type="button" name="search" value="Search">Search</button>
+													<button type="button" name="search" value="Search"
+														ng-click="showDiv = !showDiv">Search</button>
 													<button type="button">To Excel</button>
 												</div>
 											</form>
+											<div ng-show="showDiv">
+												<table border="1">
+													<tr>
+														<th ng-repeat="column in cols">{{column}}</th>
+													</tr>
+													<tr>
+														<input type="text">
+													</tr>
+													<tr ng-repeat="row in rows">
+														<td ng-repeat="column in cols">{{row[column]}}</td>
+													</tr>
+												</table>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -301,56 +313,62 @@
 
 				<div class="divTable1" align="center">
 					<div class="divTablebody">
-					<div  ng-controller="account">
-						 <form ng-submit="detailspassword()"> 
-						 <div><%Changepassword chpass=new Changepassword();%><%=chpass.getMessage() %></div>
-						<div>{{errormessage}}</div>
-						<div>${messagee} </div>
-						<div class="divTableRow">
-						
-						
-							<div class="divTableCell">User Name:</div>
-							<div class="divTableCell">
-								<input type="text" id="username" value="<%=session.getAttribute("username")%>" ng-init="username = '<%=session.getAttribute("username")%>'"   readonly="readonly">
-							</div>
+						<div ng-controller="account">
+							<form ng-submit="detailspassword()">
+								<div>
+									<%
+										Changepassword chpass = new Changepassword();
+									%><%=chpass.getMessage()%></div>
+								<div>{{errormessage}}</div>
+								<div>${messagee}</div>
+								<div class="divTableRow">
+
+
+									<div class="divTableCell">User Name:</div>
+									<div class="divTableCell">
+										<input type="text" id="username"
+											value="<%=session.getAttribute("username")%>"
+											ng-init="username = '<%=session.getAttribute("username")%>'"
+											readonly="readonly">
+									</div>
+								</div>
+
+
+
+
+
+
+
+								<div class="divTableRow">
+									<div class="divTableCell">Existed password:</div>
+									<div class="divTableCell">
+										<input type="password" placeholder="Existed Password"
+											id="Existedpw" ng-model="existedpassword">
+									</div>
+								</div>
+								<div class="divTableRow">
+									<div class="divTableCell">New password:</div>
+									<div class="divTableCell">
+										<input type="password" placeholder="New Password" id="newpw"
+											ng-model="newpassword">
+									</div>
+								</div>
+								<div class="divTableRow">
+									<div class="divTableCell">Password Confirmation:</div>
+									<div class="divTableCell">
+										<input type="password" placeholder="Confirm Password "
+											id="confirmpw" ng-model="confirmpassword">
+									</div>
+								</div>
+								<div class="divTableRow">
+									<div class="divTableCell">Save</div>
+									<div class="divTableCell">
+										<input type="submit" id="pwsubmit" name="Submit">
+									</div>
+								</div>
+							</form>
 						</div>
-						
-						
-						
-						
-						
-						
-						
-						<div class="divTableRow">
-						<div class="divTableCell">Existed password:</div>
-							<div class="divTableCell">
-								<input type="password" placeholder="Existed Password"
-									id="Existedpw" ng-model="existedpassword">
-							</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell">New password:</div>
-							<div class="divTableCell">
-								<input type="password" placeholder="New Password" id="newpw"
-									ng-model="newpassword">
-							</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell">Password Confirmation:</div>
-							<div class="divTableCell">
-								<input type="password" placeholder="Confirm Password "
-									id="confirmpw" ng-model="confirmpassword">
-							</div>
-						</div>
-						<div class="divTableRow">
-							<div class="divTableCell">Save</div>
-							<div class="divTableCell">
-								<input type="submit" id="pwsubmit" name="Submit">
-							</div>
-						</div>
-						 </form>
 					</div>
-               </div>
 				</div>
 
 

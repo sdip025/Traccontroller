@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gps21.model.Devices;
+import com.gps21.Services.Devicedetails;
 import com.gps21.Services.UserService;
 import com.gps21.dao.Userdao;
 import com.gps21.model.Changepassword;
@@ -19,8 +20,12 @@ import com.gps21.model.Users;
 @Transactional
 public class UserServiceImpl implements UserService {
 
+	private final Userdao udo;
+
 	@Autowired
-	private Userdao udo;
+	public UserServiceImpl(Userdao udo) {
+		this.udo = udo;
+	}
 
 	@Override
 	@Transactional
@@ -41,27 +46,26 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public ArrayList<Devices> dlist(String uname) {
-		
+
 		return (ArrayList<Devices>) udo.dlist(uname);
 	}
 
 	@Override
 	public HashMap<String, List<Devices>> devicelist(String username) {
-		HashMap<String,List<Devices>>devicelist=new HashMap<String, List<Devices>>();
+		HashMap<String, List<Devices>> devicelist = new HashMap<String, List<Devices>>();
 		devicelist.put(username, udo.dlist(username));
 		return devicelist;
 	}
 
 	@Override
 	public String updatepassword(Changepassword users) {
-		
+
 		return udo.updatepassword(users);
 	}
 
-	/*@Override
-	public String changepassword(String uname) {
-	
-		return udo.changepassword(uname);
-	}
-*/
+	/*
+	 * @Override public String changepassword(String uname) {
+	 * 
+	 * return udo.changepassword(uname); }
+	 */
 }

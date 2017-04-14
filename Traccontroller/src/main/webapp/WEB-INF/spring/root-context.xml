@@ -1,83 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-	
-	<!-- Root Context: defines shared resources visible to all other web components -->
-	
-	
-	<context:component-scan base-package="com.gps21"/>
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" p:location="WEB-INF/database.properties"/>
-	<bean  id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" p:driverClassName="${jdbc.driverClassName}"
-		p:url="${jdbc.databaseurl}" p:username="${jdbc.username}" p:password="${jdbc.password}"  destroy-method="close"/>
-	
-	
-	<bean  id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-	<property  name="dataSource" ref="dataSource"/>
-	<property name="annotatedClasses">
-	
-	<list>
-	<value>com.gps21.model.Devices</value>
-	<value>com.gps21.model.Users</value>
-	<value>com.gps21.model.Positions</value>
-	<value>com.gps21.model.DeviceIcons</value>
-	<value>com.gps21.model.ApplicationSettings</value>
-	
-	<value>com.gps21.model.Events</value>
-	<value>com.gps21.model.Geofences</value>
-	<value>com.gps21.model.Groups</value>
-	<value>com.gps21.model.Maintenances</value>
-	<value>com.gps21.model.NotificationSettings</value>
-	<value>com.gps21.model.NotificationTemplates</value>
-	<value>com.gps21.model.Pictures</value>
-	<value>com.gps21.model.Reports</value>
-	<value>com.gps21.model.Sensors</value>
-	<value>com.gps21.model.Test</value>
-	<value>com.gps21.model.UiState</value>
-	<value>com.gps21.model.Users</value>
-	<!-- <value>com.gps21.model.Userdevice</value> -->
-    <!-- 	<value>com.gps21.model.UserComposite</value> -->
-	<value>com.gps21.model.UserSettings</value>
-	<value>com.gps21.model.UsersNotifications</value>
-	<value>com.gps21.model.UsersNotificationsId</value>
-	<!-- <value>com.gps21.hmodel.Devices</value>
-	<value>com.gps21.model.Positions</value>
-	<value>com.gps21.model.User</value>
-	<value>com.gps21.model.Device</value>
-	<value>com.gps21.model.Userdevice</value>
-	<value>com.gps21.model.Userdevice</value> -->
-	</list>
-     </property>
-     <property name="hibernateProperties">
-        <value>
-            hibernate.format_sql=true
-            hibernate.show_sql=true
-            hibernate.cache.use_second_level_cache=false
-            hibernate.cache.use_query_cache=false
-            hibernate.generate_statistics=true
-            org.hibernate.cache.ehcache.configurationResourceName=/ehcache.xml
-            hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
-        </value>
-    </property>
-      <!-- <property name="hibernateProperties">
-    <props >
-   
-    <prop key="hibernate.dialect">${jdbc.dialect}</prop>
-    <prop key="hibernate.show_sql">false</prop>
-    <prop key="hibernate.cache.use_query_cache">true</prop>
-    <prop key="hibernate.cache.use_second_level_cache">true</prop>
-    <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
-   </props>
-   </property> -->
-</bean>	
 
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-  <property name="sessionFactory" ref="sessionFactory" />
-</bean>
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+
+	<context:component-scan base-package="com.gps21" />
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="WEB-INF/database.properties" />
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		p:driverClassName="${jdbc.driverClassName}" p:url="${jdbc.databaseurl}"
+		p:username="${jdbc.username}" p:password="${jdbc.password}"
+		destroy-method="close" />
+
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="annotatedClasses">
+
+			<list>
+				<value>com.gps21.model.Devices</value>
+				<value>com.gps21.model.Users</value>
+				<value>com.gps21.model.Positions</value>
+				<value>com.gps21.model.DeviceIcons</value>
+				<value>com.gps21.model.ApplicationSettings</value>
+				<value>com.gps21.model.Events</value>
+				<value>com.gps21.model.Geofences</value>
+				<value>com.gps21.model.Groups</value>
+				<value>com.gps21.model.Maintenances</value>
+				<value>com.gps21.model.NotificationSettings</value>
+				<value>com.gps21.model.NotificationTemplates</value>
+				<value>com.gps21.model.Pictures</value>
+				<value>com.gps21.model.Reports</value>
+				<value>com.gps21.model.Sensors</value>
+				<value>com.gps21.model.Test</value>
+				<value>com.gps21.model.UiState</value>
+				<value>com.gps21.model.Users</value>
+
+				<value>com.gps21.model.UserSettings</value>
+				<value>com.gps21.model.UsersNotifications</value>
+				<value>com.gps21.model.UsersNotificationsId</value>
+				<value>com.gps21.Services.Devicedetails</value>
+
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<value>
+				hibernate.format_sql=true
+				hibernate.show_sql=true
+                hibernate.cache.use_second_level_cache=true
+				hibernate.cache.use_query_cache=true
+				hibernate.generate_statistics=true
+				org.hibernate.cache.ehcache.configurationResourceName=/ehcache.xml
+				hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+			</value>
+		</property>
+
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
 </beans>

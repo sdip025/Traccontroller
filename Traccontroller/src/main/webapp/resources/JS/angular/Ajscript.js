@@ -15,7 +15,7 @@ myangu
 					};
 
 					var mapOptions = {
-						zoom : 15,
+						zoom : 5,
 						center : new google.maps.LatLng(22.471466666666668,
 								88.39954333333333),
 						mapTypeId : google.maps.MapTypeId.ROADMAP
@@ -82,32 +82,43 @@ myangu
 										}
 
 									});
-					
-					  $http.get("/java/dlist").then(function(dlist) {
-					  alert(JSON.stringify(dlist)); $scope.delist = dlist.data;
-					  for (var i = 0,len = $scope.delist.length; i<len; i++) {
-					  var udlist = $scope.delist[i]; }
-					  
-					  });
-					 
+
+					$http
+							.get("/java/dlist")
+							.then(
+									function(dlist) {
+										alert(JSON.stringify(dlist));
+										$scope.delist = dlist.data;
+
+										alert(lsize);
+										for (var i = 0, len = $scope.delist.length; i < len; i++) {
+											var udlist = $scope.delist[i];
+											$scope.devlist = udlist;
+										}
+
+									});
 
 				});
 
+myangu.controller('account', [ '$scope', '$http', function($scope, $http) {
+	$scope.detailspassword = function() {
+		var data = sessionStorage.getItem('username');
 
-myangu.controller('account', ['$scope', '$http', function ($scope, $http) {
-    $scope.detailspassword = function () {
-    	var data = sessionStorage.getItem('username');
-       /* alert($scope.confirmpassword + "" + $scope.newpassword + "" + $scope.existedpassword);*/
-        var formData = { confirmpassword: $scope.confirmpassword, newpassword: $scope.newpassword, existedpassword: $scope.existedpassword,username:$scope.username };
+		var formData = {
+			confirmpassword : $scope.confirmpassword,
+			newpassword : $scope.newpassword,
+			existedpassword : $scope.existedpassword,
+			username : $scope.username
+		};
 
-        var error = function (responce) {
-            $scope.errormessage = "Unsuccessful";
-            console.log("Unsuccessful");
-        };
-        var submitvalue = function (request) {
-        	 console.log("successful");
-            $scope.success = "success";
-        };
-        $http.post('/java/updatepassword',formData).then(submitvalue, error);
-    };
-}]);
+		var error = function(responce) {
+			$scope.errormessage = "Unsuccessful";
+			console.log("Unsuccessful");
+		};
+		var submitvalue = function(request) {
+			console.log("successful");
+			$scope.success = "success";
+		};
+		$http.post('/java/updatepassword', formData).then(submitvalue, error);
+	};
+} ]);

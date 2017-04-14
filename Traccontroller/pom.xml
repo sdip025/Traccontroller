@@ -96,6 +96,7 @@
 		<!-- hibernate-ehcache -->
 		<!-- EHCache Core APIs -->
 		
+		
 		<!--Json -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
