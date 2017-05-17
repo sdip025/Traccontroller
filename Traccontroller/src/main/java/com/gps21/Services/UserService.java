@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.gps21.model.Changepassword;
+import com.gps21.model.Devicedetails;
 import com.gps21.model.Devices;
 import com.gps21.model.Users;
 import com.gps21.model.Positions;
@@ -21,7 +22,8 @@ public interface UserService {
 	
 	public HashMap<String, List<Devices>> devicelist(String username);
 	
-	public String updatepassword(Changepassword users);
+	public  String updatepassword(Changepassword users);
+	public HashMap<String,Devicedetails>devicedetails=new HashMap<String, Devicedetails>();
 	
 
 }

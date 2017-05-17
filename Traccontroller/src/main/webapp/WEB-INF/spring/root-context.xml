@@ -46,7 +46,7 @@
 				<value>com.gps21.model.UserSettings</value>
 				<value>com.gps21.model.UsersNotifications</value>
 				<value>com.gps21.model.UsersNotificationsId</value>
-				<value>com.gps21.Services.Devicedetails</value>
+				<value>com.gps21.Services.Devicedetls</value>
 
 			</list>
 		</property>

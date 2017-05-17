@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gps21.model.Devices;
-import com.gps21.Services.Devicedetails;
+import com.gps21.Services.Devicedetls;
 import com.gps21.Services.UserService;
 import com.gps21.dao.Userdao;
 import com.gps21.model.Changepassword;
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	@Transactional
+
 	public List<Positions> plist() {
 		return udo.plist();
 	}

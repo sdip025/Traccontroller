@@ -1,12 +1,10 @@
 package com.gps21.java;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
 import org.json.JSONException;
 import org.slf4j.Logger;
@@ -15,14 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.gps21.model.Changepassword;
@@ -36,13 +33,12 @@ import com.gps21.model.Users;
  */
 @Controller
 @SessionAttributes("username")
-@EnableWebMvc
 public class HomeController {
 
-	private  UserService uservice;
+	private UserService uservice;
 
 	@Autowired
-	void setHomeController(UserService uservice) {
+	void HomeController(UserService uservice) {
 
 		this.uservice = uservice;
 	}
@@ -107,8 +103,6 @@ public class HomeController {
 			return "login";
 		}
 	}
-
-
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(Model model, HttpSession sessions) throws Exception {
