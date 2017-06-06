@@ -14,7 +14,7 @@ function MapController($scope, $http) {
 		return this.tab === tabId;
 	};
 
-	var icon = "";
+	var icon ="";
 	var lastInfoWindow = null;
 
 	var dl = [];// list of device.
