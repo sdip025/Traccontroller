@@ -14,13 +14,15 @@ function MapController($scope, $http) {
 		return this.tab === tabId;
 	};
 
-	var icon ="";
+	var icon = "";
 	var lastInfoWindow = null;
-
+	var latlonginfo = null;
 	var dl = [];// list of device.
-
+	var glat=null;
+	var glong=null;
 	var getdeviceproperty;
-
+	 $scope.gmaplatlong=[];
+	 $scope.selectedlatlong=[];
 	/* Google Map */
 	var mapcenter = new google.maps.LatLng({
 		lat : 22.471466666666668,
@@ -32,9 +34,10 @@ function MapController($scope, $http) {
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	});
 
-	/* Marker */
+	/* Marker with infowindow */
 
 	var markerpositions = function(dtitle, lat, long) {
+
 		this.infowindow = new google.maps.InfoWindow();
 		this.marker = new google.maps.Marker({
 
@@ -42,22 +45,17 @@ function MapController($scope, $http) {
 			map : gmap,
 			title : dtitle
 		});
-
+		$scope.gmaplatlong.push(lat);
+		$scope.gmaplatlong.push(long);
+         $scope.gmaplat=lat;
+         $scope.gmaplong=long;
 		infowindow.setContent('<b>' + dtitle + '</b>');
 
-		/*
-		 * this.deviceinfowindow = new google.maps.InfoWindow({ content : '<b>' +
-		 * dtitle + '</b>'
-		 * 
-		 * });
-		 */
 		infowindow.open(gmap, marker);
-		/*
-		 * closeInfoWindo(); lastInfoWindow =infowindow;
-		 */
+
 	};
 
-	/* Device List */
+	/* Device List with account name */
 	var getdevicelist = function(details) {
 		for ( var dkey in details.data) {
 			var dproper = details.data[dkey];
@@ -72,10 +70,11 @@ function MapController($scope, $http) {
 	$scope.devicelist = dl;
 	$scope.getdevicedetails = $http.get("/java/devicedetails").then(
 			getdevicelist, error);
+
 	/* Device Details */
 
 	var deviceposition = function(details) {
-		alert("Device position" + details.latitude + "   " + details.latitude);
+		alert("Device position" + details.latitude + "   " + details.longitude);
 
 		gmap.setZoom(15);
 		gmap.setCenter(parseFloat(details.latitude),
@@ -101,16 +100,35 @@ function MapController($scope, $http) {
 			dw.infowindow.open(gmap, dw.marker);
 
 		});
+		 $scope.selectedlatlong.push(details.latitude);
+		 $scope.selectedlatlong.push(details.longitude);
+		$scope.result=angular.equals( $scope.gmaplatlong,  $scope.selectedlatlong);
+		alert($scope.result);
+		
+		alert("Equal"+glat+glong);
+		if(details.latitude.equals(glat) && details.longitude.equals(glong)){
+			dw.infowindow.setContent(null);
+			dw.marker.setPosition(details.latitude,details.longitude);
+			dw.infowindow.open(gmap, dw.marker);
+			alert("Equal");
+		}
 		closeInfoWindo();
+		/* latlonginfo.close(); */
 		dw.infowindow.setContent(details);
 		lastInfoWindow = dw.infowindow;
 		dw.infowindow.open(gmap, dw.marker);
 
 	};
 	var closeInfoWindo = function() {
+
 		if (lastInfoWindow) {
 			lastInfoWindow.close();
+
 		}
+		/*
+		 * if (latlonginfo) { latlonginfo.close(); }
+		 */
+
 	};
 
 	/*
@@ -124,7 +142,7 @@ function MapController($scope, $http) {
 	 * detailsmessage.open(gmap, dw.marker); });
 	 */
 
-	/* Get All properties of a device from DeviceController */
+	// Get All properties of a device from DeviceController
 	var getddetails = function(devicename) {
 
 		var getdetails = function(result) {
@@ -147,7 +165,7 @@ function MapController($scope, $http) {
 
 	};
 
-	/* Invoke from jsp to get all properties */
+	// Invoke from jsp to get all properties.
 	$scope.selectdevicedetails = getddetails;
 
 	/*
