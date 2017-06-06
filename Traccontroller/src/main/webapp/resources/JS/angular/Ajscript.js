@@ -1,4 +1,4 @@
-var myangu = angular.module('mapsApp', []);
+var myangu = angular.module('mapsApp', [ 'ngMaterial', 'ngMessages' ]);
 
 myangu.controller('MapCtrl', MapController);
 
@@ -14,223 +14,152 @@ function MapController($scope, $http) {
 		return this.tab === tabId;
 	};
 
-	var map = null;
-	var locations = [];
 	var icon = "";
-	
-	initMap();
-	
-	function initMap() {
-		var map = new google.maps.Map(document.getElementById('map'), {
-			zoom : 5,
-			center : new google.maps.LatLng(22.471466666666668,
-					88.39954333333333)
+	var lastInfoWindow = null;
 
+	var dl = [];// list of device.
+
+	var getdeviceproperty;
+
+	/* Google Map */
+	var mapcenter = new google.maps.LatLng({
+		lat : 22.471466666666668,
+		lng : 88.39954333333333
+	});
+	var gmap = new google.maps.Map(document.getElementById('map'), {
+		zoom : 5,
+		center : mapcenter,
+		mapTypeId : google.maps.MapTypeId.ROADMAP
+	});
+
+	/* Marker */
+
+	var markerpositions = function(dtitle, lat, long) {
+		this.infowindow = new google.maps.InfoWindow();
+		this.marker = new google.maps.Marker({
+
+			position : new google.maps.LatLng(lat, long),
+			map : gmap,
+			title : dtitle
 		});
 
-		
-		$http
-				.get("/java/devicedetails")
-				.then(
-						function(positionlist) {
-							$scope.polist = positionlist.data;
-							var dl = [];
+		infowindow.setContent('<b>' + dtitle + '</b>');
 
-							for ( var prop in positionlist.data) {
+		/*
+		 * this.deviceinfowindow = new google.maps.InfoWindow({ content : '<b>' +
+		 * dtitle + '</b>'
+		 * 
+		 * });
+		 */
+		infowindow.open(gmap, marker);
+		/*
+		 * closeInfoWindo(); lastInfoWindow =infowindow;
+		 */
+	};
 
-								var currMarker = positionlist.data[prop];
-								dl.push(currMarker[0]);
+	/* Device List */
+	var getdevicelist = function(details) {
+		for ( var dkey in details.data) {
+			var dproper = details.data[dkey];
+			markerpositions(dproper[0], dproper[1], dproper[2]);
+			dl.push(dproper[0]);
 
-								var contentString = '<p><b>Name</b>: '
-										+ currMarker[0] + '</br>' +
+		}
+	};
+	var error = function(reason) {
+		alert("Error");
+	};
+	$scope.devicelist = dl;
+	$scope.getdevicedetails = $http.get("/java/devicedetails").then(
+			getdevicelist, error);
+	/* Device Details */
 
-										'<b>Lat</b>: ' + currMarker[1]
-										+ '</br>' + '<b>ID</b>: '
-										+ currMarker[2] + '</br>'+'<b>Address</b>: '
-										+ '<a>Address</a>' + 
-										 '</br>' +
+	var deviceposition = function(details) {
+		alert("Device position" + details.latitude + "   " + details.latitude);
 
-										'<b>Speed</b>: ' +'speed'
-										+ '</br>' + '<b>Time And Date</b>: '
-										 + '</br>'+'<b>Status</b>: '
-										+ '<a >Status</a>'
-										 + '</br>' +'<b>History</b>: '
-										+ '<a href="">PlayBack</a>'
-										
-										'</p>';
+		gmap.setZoom(15);
+		gmap.setCenter(parseFloat(details.latitude),
+				parseFloat(details.longitude));
+		this.dw = new markerpositions(details.dname, details.latitude,
+				details.longitude);
 
-								locations.push({
-									latlon : new google.maps.LatLng(
-											currMarker[1], currMarker[2]),
-									message : new google.maps.InfoWindow({
-										content : contentString,
-										maxWidth : 320
-									}),
-									username : currMarker[0],
+		var details = '<p><b>Name</b>: ' + details.dname + '</br>' +
 
-								});
+		'<b>ID</b>: ' + details.imei + '</br>' + '<b>Address</b>: '
+				+ details.address + '</br>' + '<b>Current Status</b>: '
+				+ details.status + '</br>' +
 
-							}
+				'<b>Speed</b>: ' + details.speed + '</br>'
+				+ '<b>Last Update</b>: ' + details.lastupdate + '</br>'
+				+ '<b>History</b>: ' + '<a href="">PlayBack</a>'
 
-							$scope.devicelist = dl;
-							$scope.itemsLength = Object.keys($scope.devicelist).length;
-						
-							locations
-									.forEach(function(n) {
-										console.log(n);
-										var marker = new google.maps.Marker({
-											position : n.latlon,
-											map : map,
+		'</p>';
 
-											icon : icon,
-											title : n.username
-										});
+		google.maps.event.addListener(dw.marker, 'click', function() {
 
-										var devicenamee = $scope.devicename;
-                                     google.maps.event
-												.addListener(
-														marker,
-														'click',
-														function() {
-															
+			dw.infowindow.setContent(details);
+			dw.infowindow.open(gmap, dw.marker);
 
-															var mapp = new google.maps.Map(
-																	document
-																			.getElementById('map'),
-																	{
-																		zoom : 14,
-																		center : new google.maps.LatLng(
-																				currMarker[1],
-																				currMarker[2])
+		});
+		closeInfoWindo();
+		dw.infowindow.setContent(details);
+		lastInfoWindow = dw.infowindow;
+		dw.infowindow.open(gmap, dw.marker);
 
-																	});
+	};
+	var closeInfoWindo = function() {
+		if (lastInfoWindow) {
+			lastInfoWindow.close();
+		}
+	};
 
-															var markerr = new google.maps.Marker(
-																	{
-																		position : n.latlon,
-																		map : mapp,
+	/*
+	 * var clickevent=google.maps.event.addListener(dw.marker, 'click',
+	 * function() { dw.deviceinfowindow.open(gmap, dw.marker); });
+	 */
 
-																		icon : icon,
-																		title : n.username
-																	});
+	/* Click to show properties */
+	/*
+	 * google.maps.event.addListener(dw.marker, 'click', function() {
+	 * detailsmessage.open(gmap, dw.marker); });
+	 */
 
-															
-															n.message.open(
-																	mapp,
-																	markerr);
-														});
-                                 	
-        								var abcd= [];
-                                     $http.get("/java/sddetails").then(function(perddetails){
-         								
-         								var perddetails=perddetails.data;
-         								for(var dkey in perddetails.data  ){
-         									
-         									var dprop=perddetails.data[dkey];
-         									abcd.push(dprop);
-         									
-         									
-         									
-         								}
-         								
-         								
-         							});
+	/* Get All properties of a device from DeviceController */
+	var getddetails = function(devicename) {
 
+		var getdetails = function(result) {
+			var getdevicedata = result.data;
+			getdeviceproperty = getdevicedata;
+			deviceposition(getdevicedata);
+			/* alert("Result" + getdevicedata.lastupdate); */
 
-										$scope.devicedetails = function(
-												devicename) {
-										
-											for ( var prop in positionlist.data) {
-												
-												if (prop == devicename) {
+		};
+		var failure = function() {
 
-													var devicedetails = positionlist.data[prop];
+			alert("Failed");
+		};
+		var sdevice = {
 
-													var dmapp = new google.maps.Map(
-															document
-																	.getElementById('map'),
-															{
-																zoom : 16,
-																center : new google.maps.LatLng(
-																		devicedetails[1],
-																		devicedetails[2])
+			selecteddevice : devicename
+		};
 
-															});
-													var permarkerr = new google.maps.Marker(
-															{
-																position : new google.maps.LatLng(
-																		devicedetails[1],
-																		devicedetails[2]),
-																map : dmapp,
+		$http.post('/java/sddetails', sdevice).then(getdetails, failure);
 
-																icon : icon,
-																title : devicedetails[0]
-															});
-													
-																										
-													var ddetails = '<p><b>Name</b>: '
-													+ devicedetails[0] + '</br>' +
+	};
 
-													'<b>Lat</b>: ' + devicedetails[1]
-													+ '</br>' + '<b>ID</b>: '
-													+ devicedetails[2] + '</br>'+'<b>Address</b>: '
-													+ '<a>Address</a>' + 
-													 '</br>' +
+	/* Invoke from jsp to get all properties */
+	$scope.selectdevicedetails = getddetails;
 
-													'<b>Speed</b>: ' +'speed'
-													+ '</br>' + '<b>Time And Date</b>: '
-													 + '</br>'+'<b>Status</b>: '
-													+ '<a >Status</a>'
-													 + '</br>' +'<b>History</b>: '
-													+ '<a href="">PlayBack</a>'
-													
-													'</p>';
-													
+	/*
+	 * google.maps.event.addListener(marker, 'click', function() { alert("abcd")
+	 * 
+	 * });
+	 */
 
-												}
-											
-												for ( var propp in positionlist.data) {
-													
-													
-													if(propp!=devicename){
-														var alldevices = positionlist.data[propp];
-													var mmarkerr = new google.maps.Marker(
-															{
-																position : new google.maps.LatLng(
-																		alldevices[1],
-																		alldevices[2]),
-																map : dmapp,
+	/* End Properties */
 
-																icon : icon,
-																title : alldevices[0]
-															});
-
-												}
-												}
-										
-												var message = new google.maps.InfoWindow(
-														{
-
-															content : ddetails,
-														});
-
-												message.open(dmapp, permarkerr);
-												
-											
-											}
-											;
-											
-										};
-
-									});
-
-						});
-
-	}
 }
-
-
-
+/* Update Password */
 myangu.controller('account', [ '$scope', '$http', function($scope, $http) {
 	$scope.detailspassword = function() {
 		var data = sessionStorage.getItem('username');
@@ -253,3 +182,31 @@ myangu.controller('account', [ '$scope', '$http', function($scope, $http) {
 		$http.post('/java/updatepassword', formData).then(submitvalue, error);
 	};
 } ]);
+
+/* Milagereport */
+myangu.controller('milagereport', function($scope, $http) {
+
+	$scope.getstatistics = function() {
+		alert($scope.fromdate);
+		alert($scope.devicename + $scope.fuelconsum);
+
+		var giveninputvalue = {
+			devicename : $scope.devicename,
+			fromdate : $scope.fromdate,
+			todate : $scope.todate,
+			givenfuelconsumption : $scope.fuelconsum
+		};
+		var success = function() {
+			alert("success");
+
+		};
+		var failure = function() {
+			alert("failure");
+
+		};
+		$http.post('/java/mileagereport', giveninputvalue).then(success,
+				failure);
+
+	};
+
+});

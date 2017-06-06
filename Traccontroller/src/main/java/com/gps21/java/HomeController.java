@@ -67,15 +67,6 @@ public class HomeController {
 		return "redirect:locationpage";
 	}
 
-	/*
-	 * @RequestMapping(value = "/locationpage", method = RequestMethod.GET)
-	 * public String locationpage(Model model) {
-	 * 
-	 * model.addAttribute("latlong", uservice.plist());
-	 * 
-	 * return "location"; }
-	 */
-
 	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
 	public String loginresult(@ModelAttribute("userlog") Users userlog,
 			ModelMap map, HttpSession session) throws NullPointerException,
@@ -106,7 +97,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public String logout(Model model, HttpSession sessions) throws Exception {
-		// sessions.removeAttribute("username");
+
 		if (model.containsAttribute("username"))
 			model.asMap().remove("username");
 		sessions.invalidate();
@@ -132,21 +123,6 @@ public class HomeController {
 
 		map.addAttribute("messagee", message);
 		return "home";
-	}
-
-	@RequestMapping(value = "/position", method = RequestMethod.GET, produces = "application/json")
-	public List<Positions> getlocation() {
-		return uservice.plist();
-	}
-
-	@ResponseBody
-	@RequestMapping(value = "/dlist", method = RequestMethod.GET, produces = "application/json")
-	public ArrayList<Devices> devicelist(HttpSession session) {
-
-		String uname = (String) session.getAttribute("username");
-		System.out.print("Session Value" + uname);
-
-		return uservice.dlist(uname);
 	}
 
 }

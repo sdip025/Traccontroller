@@ -1,21 +1,21 @@
 package com.gps21.ServiceImp;
 
-import java.util.ArrayList;
+
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.gps21.Services.Devicedetls;
+import com.gps21.Services.Devicedetails;
 import com.gps21.dao.Userdao;
-import com.gps21.model.Devicedetails;
+import com.gps21.model.Deviceproperties;
+import com.gps21.model.Userinput;
 
 
 @Service
 @Transactional
-public class DevicedetailsImp implements Devicedetls {
+public class DevicedetailsImp implements Devicedetails {
 
 	private Userdao udao;
 
@@ -26,31 +26,15 @@ public class DevicedetailsImp implements Devicedetls {
 	}
 
 	@Override
-	public HashMap<String, Devicedetails> devicedetails(String uname) {
-		
-		return udao.devicedetails(uname);
+	public  Deviceproperties updateposition(Userinput devicename) {
+	
+		return udao.updateposition(devicename);
 	}
 
 	@Override
-	public HashMap<String,String[]> deviceposition(String uname) {
-		
-		
-		
-		HashMap<String, String[]>abcd=new HashMap<String, String[]>();
-		abcd=udao.deviceposition(uname);
-		for(Entry<String, String[]> value : abcd.entrySet()){
-			System.out.println("List of value" + value);
-			
-			
-		}
+	public HashMap<String, String[]> deviceposition(String uname) {
 		
 		return udao.deviceposition(uname);
-	}
-
-	@Override
-	public HashMap<String, String[]> updateposition(String devicename) {
-		// TODO Auto-generated method stub
-		return udao.updateposition(devicename);
 	}
 
 }

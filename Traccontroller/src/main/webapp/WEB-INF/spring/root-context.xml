@@ -42,11 +42,10 @@
 				<value>com.gps21.model.Test</value>
 				<value>com.gps21.model.UiState</value>
 				<value>com.gps21.model.Users</value>
-
-				<value>com.gps21.model.UserSettings</value>
+                <value>com.gps21.model.UserSettings</value>
 				<value>com.gps21.model.UsersNotifications</value>
 				<value>com.gps21.model.UsersNotificationsId</value>
-				<value>com.gps21.Services.Devicedetls</value>
+				<value>com.gps21.Services.Devicedetails</value>
 
 			</list>
 		</property>

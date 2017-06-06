@@ -1,32 +1,28 @@
 package com.gps21.DaoImpl;
 
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
-import javax.print.attribute.standard.DateTimeAtCompleted;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.TransactionException;
-import org.omg.CORBA.PUBLIC_MEMBER;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateQueryException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gps21.model.Changepassword;
-import com.gps21.model.Devicedetails;
-import com.gps21.model.Devices;
+import com.gps21.model.Deviceproperties;
+
+import com.gps21.model.Statistics;
+import com.gps21.model.Userinput;
 import com.gps21.model.Users;
-import com.gps21.Services.Devicedetls;
 import com.gps21.dao.Userdao;
 import com.gps21.model.Positions;
 
@@ -35,32 +31,6 @@ public class Daoimpl implements Userdao {
 
 	@Autowired
 	private SessionFactory session;
-
-	@Override
-	@Transactional
-	public List<Positions> plist() throws HibernateException,
-			ClassCastException {
-
-		List<String> list = new ArrayList<String>();
-		String selectposition = " from Positions p where p.id BETWEEN  75215 and  75223";
-
-		List<Positions> plt = session.getCurrentSession()
-				.createQuery(selectposition).list();
-
-		System.out.println("Position" + selectposition);
-
-		return plt;
-	}
-
-	@Override
-	public List<Users> ulist() {
-		List<Users> lognlist = new ArrayList<Users>();
-		String ulogin = "select u.login ,u.password from Users u";
-		lognlist = session.getCurrentSession().createQuery(ulogin).list();
-
-		return lognlist;
-
-	}
 
 	/* Users Authentication. */
 	@Override
@@ -87,27 +57,6 @@ public class Daoimpl implements Userdao {
 	}
 
 	/* Device List For an Users. */
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Devices> dlist(String uname) {
-
-		/*
-		 * String ldevice =
-		 * "select d.name from Users u join u.deviceses_1 d  where u.login  =:username "
-		 * ;
-		 */
-
-		Query que = session.getCurrentSession().getNamedQuery(
-				"Devicelist.Byuname");
-		que.setParameter("username", uname);
-		que.setCacheable(true);
-
-		List<Devices> devicelist = new ArrayList<Devices>();
-		devicelist = que.list();
-
-		return devicelist;
-
-	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -116,9 +65,6 @@ public class Daoimpl implements Userdao {
 	public String updatepassword(Changepassword cpw) {
 
 		String passwordmessage = "";
-
-		System.out.println("username->" + cpw.getUsername() + "--"
-				+ cpw.getConfirmpassword() + "--" + cpw.getExistedpassword());
 
 		try {
 
@@ -138,8 +84,6 @@ public class Daoimpl implements Userdao {
 
 			}
 
-			// System.out.println("hello->  " +
-			// pw+"  "+cpw.getExistedpassword());
 			if (pw.equals(cpw.getExistedpassword())) {
 				try {
 					String updatepassword = "update  Users u set u.password=:password where  u.login=:username";
@@ -210,45 +154,6 @@ public class Daoimpl implements Userdao {
 	}
 
 	@Override
-	public HashMap<String, Devicedetails> devicedetails(String uname) {
-
-		HashMap<String, Devicedetails> ddetais = new HashMap<String, Devicedetails>();
-		List<String> devicelist = new ArrayList<String>();
-		List<String> ddetails = new ArrayList<String>();
-		List<String> deviceposition = new ArrayList<String>();
-		String devicename = "";
-		Query que = session.getCurrentSession().getNamedQuery(
-				"Devicelist.Byuname");
-		que.setParameter("username", uname);
-
-		devicelist = que.list();
-
-		for (String dname : devicelist) {
-
-			String detailsposition = "select p.latitude,p.longitude from Devices d  join d.positions p where d.name =:devicename";
-			Query detailsfromposition = session.getCurrentSession()
-					.createQuery(detailsposition);
-
-			detailsfromposition.setParameter("devicename", dname);
-			devicename = dname;
-			ddetails = detailsfromposition.list();
-			deviceposition = ddetails;
-
-		}
-
-		System.out.println("List Value" + devicelist + "Device Details"
-				+ ddetails);
-
-		Devicedetails devdetails = new Devicedetails(uname, uname, uname,
-				uname, uname, uname, uname, null, null, null, null);
-
-		ddetais.put(devicename, devdetails);
-
-		return ddetais;
-
-	}
-
-	@Override
 	public HashMap<String, String[]> deviceposition(String uname)
 			throws HibernateException, HibernateQueryException {
 
@@ -279,9 +184,9 @@ public class Daoimpl implements Userdao {
 				latlong[0] = dname;
 				latlong[1] = lat.toString();
 				latlong[2] = longitude.toString();
-
+/*
 				System.out.println("Device name and details " + dname + " lat "
-						+ lat + "longitude" + longitude + "Array" + latlong);
+						+ lat + "longitude" + longitude + "Array" + latlong);*/
 
 			}
 			ddetais.put(dname, latlong);
@@ -291,61 +196,60 @@ public class Daoimpl implements Userdao {
 	}
 
 	@Override
-	public HashMap<String, String[]> updateposition(String devicename) {
+	public  Deviceproperties updateposition(
+			Userinput devicename) {
 
-		HashMap<String, String[]> udetails = new HashMap<String, String[]>();
+		Deviceproperties dproperties = new Deviceproperties();
+		HashMap<Userinput, Deviceproperties> udetails = new HashMap<Userinput, Deviceproperties>();
+		String dname = devicename.getSelecteddevice();
+		try {
 
-		String uddetails[] = new String[7];
+			String updetails = "select p.address,p.speed,p.latitude,p.longitude from Devices d  join d.positions p where d.name =:devicename";
+			String uid = "select  d.uniqueId,d.status,d.lastupdate  from Devices d where d.name=:deviceuid";
 
-		/* try { */
+			Query que = session.getCurrentSession().createQuery(updetails);
+			que.setParameter("devicename", dname);
 
-		String updetails = "select p.address,p.speed,p.latitude,p.longitude from Devices d  join d.positions p where d.name =:devicename";
-		String uid = "select  d.uniqueId,d.status,d.lastupdate  from Devices d where d.name=:deviceuid";
+			Query uiddue = session.getCurrentSession().createQuery(uid);
+			uiddue.setParameter("deviceuid", dname);
+			dproperties.setDname(dname);
 
-		Query que = session.getCurrentSession().createQuery(updetails);
+			List<Object[]> details = (List<Object[]>) que.list();
+			List<Object[]> uidlist = (List<Object[]>) uiddue.list();
 
-		Query uiddue = session.getCurrentSession().createQuery(uid);
+			for (Object[] i : uidlist) {
 
-		que.setParameter("devicename", devicename);
-		uiddue.setParameter("deviceuid", devicename);
+				Timestamp t = (Timestamp) i[2];
+				dproperties.setImei((String) i[0]);
 
-		List<Object[]> details = (List<Object[]>) que.list();
-		List<Object[]> uidlist = (List<Object[]>) uiddue.list();
+				dproperties.setStatus((String) i[1]);
+				dproperties.setLastupdate(t.toString());
 
-		for (Object[] i : uidlist) {
-               
-			String uniqueid=(String)i[0];
-			String status=(String)i[1];
-			Timestamp t=(Timestamp)i[2];
-			String lastupdate=t.toString();
-			uddetails[0]=uniqueid;
-			uddetails[2]=status;
-			uddetails[4]=lastupdate;
+			}
+
+			for (Object[] a : details) {
+
+				dproperties.setSpeed((Double) a[1]);
+				dproperties.setAddress((String) a[0]);
+
+				dproperties.setLatitude((Double) a[2]);
+				dproperties.setLongitude((Double) a[3]);
+
+			}
+
+			udetails.put(devicename, dproperties);
+
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		for (Object[] a : details) {
-			Double d = (Double) a[1];
-			String speed = d.toString();
-			String address = (String) a[0];
+		return dproperties;
+	}
 
-			Double lat = (Double) a[2];
-			Double lng = (Double) a[3];
-			String lati = lat.toString();
-			String lngi = lng.toString();
+	@Override
+	public Statistics mileagereport(Userinput userinput) {
+		Statistics milagereport = new Statistics();
 
-			uddetails[1] = address;
-			uddetails[3] = speed;
-			
-			uddetails[5] = lati;
-			uddetails[6] = lngi;
-		}
-
-		udetails.put(devicename, uddetails);
-		return udetails;
-
-		/*
-		 * } catch (Exception e) { // TODO: handle exception return udetails; }
-		 */
-
+		return null;
 	}
 }

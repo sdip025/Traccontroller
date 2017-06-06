@@ -43,6 +43,15 @@ divTable1{
 	width: 100%;
 	height: 3%;
 }
+ .datepickerdemo md-content {
+            padding-bottom: 200px; 
+         }
+        .datepickerdemo .validation-messages {
+            font-size: 11px;
+            color: darkred;
+            margin: 10px 0 0 25px; 
+         }
+
 .divTableRow {
 	display: table-row;
 	width: 100%;
