@@ -14,41 +14,40 @@ function MapController($scope, $http) {
 		return this.tab === tabId;
 	};
 
-	var icon = "";
 	var lastInfoWindow = null;
-	var latlonginfo = null;
+	var mclick;
+
 	var dl = [];// list of device.
-	var glat=null;
-	var glong=null;
-	var getdeviceproperty;
-	 $scope.gmaplatlong=[];
-	 $scope.selectedlatlong=[];
+
 	/* Google Map */
-	var mapcenter = new google.maps.LatLng({
-		lat : 22.471466666666668,
-		lng : 88.39954333333333
-	});
+	/*
+	 * var mapcenter = new google.maps.LatLng({ lat : 22.471466666666668, lng :
+	 * 88.39954333333333 });
+	 */
 	var gmap = new google.maps.Map(document.getElementById('map'), {
 		zoom : 5,
-		center : mapcenter,
+		center : new google.maps.LatLng({
+			lat : 22.471466666666668,
+			lng : 88.39954333333333
+		}),
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	});
+	var info = new google.maps.InfoWindow();
 
 	/* Marker with infowindow */
 
 	var markerpositions = function(dtitle, lat, long) {
 
-		this.infowindow = new google.maps.InfoWindow();
+		this.infowindow = new google.maps.InfoWindow({
+			content : ''
+		});
 		this.marker = new google.maps.Marker({
 
 			position : new google.maps.LatLng(lat, long),
 			map : gmap,
 			title : dtitle
 		});
-		$scope.gmaplatlong.push(lat);
-		$scope.gmaplatlong.push(long);
-         $scope.gmaplat=lat;
-         $scope.gmaplong=long;
+		clickmarker(marker,dtitle);
 		infowindow.setContent('<b>' + dtitle + '</b>');
 
 		infowindow.open(gmap, marker);
@@ -71,16 +70,26 @@ function MapController($scope, $http) {
 	$scope.getdevicedetails = $http.get("/java/devicedetails").then(
 			getdevicelist, error);
 
-	/* Device Details */
+	/* Device Details after clicked on car name */
 
 	var deviceposition = function(details) {
-		alert("Device position" + details.latitude + "   " + details.longitude);
+		alert("Device position" + details.dname + details.latitude + "   "
+				+ details.longitude);
 
-		gmap.setZoom(15);
-		gmap.setCenter(parseFloat(details.latitude),
-				parseFloat(details.longitude));
-		this.dw = new markerpositions(details.dname, details.latitude,
-				details.longitude);
+		gmap.setZoom(18);
+		gmap.setCenter(new google.maps.LatLng(details.latitude,
+				details.longitude));
+		var smarker = new google.maps.Marker({
+
+			position : new google.maps.LatLng(details.latitude,
+					details.longitude),
+			map : gmap,
+			title : details.dname
+		});
+		/*
+		 * this.dw = new markerpositions(details.dname, details.latitude,
+		 * details.longitude);
+		 */
 
 		var details = '<p><b>Name</b>: ' + details.dname + '</br>' +
 
@@ -94,29 +103,18 @@ function MapController($scope, $http) {
 
 		'</p>';
 
-		google.maps.event.addListener(dw.marker, 'click', function() {
+			google.maps.event.addListener(smarker, 'click', function() {
 
-			dw.infowindow.setContent(details);
-			dw.infowindow.open(gmap, dw.marker);
+			info.setContent(details);
+			info.open(gmap, smarker);
 
 		});
-		 $scope.selectedlatlong.push(details.latitude);
-		 $scope.selectedlatlong.push(details.longitude);
-		$scope.result=angular.equals( $scope.gmaplatlong,  $scope.selectedlatlong);
-		alert($scope.result);
 		
-		alert("Equal"+glat+glong);
-		if(details.latitude.equals(glat) && details.longitude.equals(glong)){
-			dw.infowindow.setContent(null);
-			dw.marker.setPosition(details.latitude,details.longitude);
-			dw.infowindow.open(gmap, dw.marker);
-			alert("Equal");
-		}
 		closeInfoWindo();
-		/* latlonginfo.close(); */
-		dw.infowindow.setContent(details);
-		lastInfoWindow = dw.infowindow;
-		dw.infowindow.open(gmap, dw.marker);
+
+		info.setContent(details);
+		lastInfoWindow = info;
+		info.open(gmap, smarker);
 
 	};
 	var closeInfoWindo = function() {
@@ -125,11 +123,14 @@ function MapController($scope, $http) {
 			lastInfoWindow.close();
 
 		}
-		/*
-		 * if (latlonginfo) { latlonginfo.close(); }
-		 */
 
 	};
+ var clickmarker=function(clkmarker,devname){google.maps.event.addListener(clkmarker, 'click', function() {
+	
+		getddetails(devname);
+		
+
+	})};
 
 	/*
 	 * var clickevent=google.maps.event.addListener(dw.marker, 'click',
@@ -168,11 +169,6 @@ function MapController($scope, $http) {
 	// Invoke from jsp to get all properties.
 	$scope.selectdevicedetails = getddetails;
 
-	/*
-	 * google.maps.event.addListener(marker, 'click', function() { alert("abcd")
-	 * 
-	 * });
-	 */
 
 	/* End Properties */
 
