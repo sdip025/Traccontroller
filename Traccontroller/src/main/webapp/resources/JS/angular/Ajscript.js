@@ -15,24 +15,27 @@ function MapController($scope, $http) {
 	};
 
 	var lastInfoWindow = null;
-	var mclick;
+	var preInfoWindow = null;
+	var clickmap;
 
 	var dl = [];// list of device.
 
 	/* Google Map */
-	/*
-	 * var mapcenter = new google.maps.LatLng({ lat : 22.471466666666668, lng :
-	 * 88.39954333333333 });
-	 */
+
 	var gmap = new google.maps.Map(document.getElementById('map'), {
 		zoom : 5,
 		center : new google.maps.LatLng({
 			lat : 22.471466666666668,
 			lng : 88.39954333333333
 		}),
+
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	});
-	var info = new google.maps.InfoWindow();
+	// Infowindow
+	var info = new google.maps.InfoWindow({
+		content : ''
+	});
+	;
 
 	/* Marker with infowindow */
 
@@ -47,7 +50,7 @@ function MapController($scope, $http) {
 			map : gmap,
 			title : dtitle
 		});
-		clickmarker(marker,dtitle);
+		clickmarker(marker, dtitle);
 		infowindow.setContent('<b>' + dtitle + '</b>');
 
 		infowindow.open(gmap, marker);
@@ -73,8 +76,10 @@ function MapController($scope, $http) {
 	/* Device Details after clicked on car name */
 
 	var deviceposition = function(details) {
-		alert("Device position" + details.dname + details.latitude + "   "
-				+ details.longitude);
+		/*
+		 * alert("Device position" + details.dname + details.latitude + " " +
+		 * details.longitude);
+		 */
 
 		gmap.setZoom(18);
 		gmap.setCenter(new google.maps.LatLng(details.latitude,
@@ -86,11 +91,9 @@ function MapController($scope, $http) {
 			map : gmap,
 			title : details.dname
 		});
-		/*
-		 * this.dw = new markerpositions(details.dname, details.latitude,
-		 * details.longitude);
-		 */
 
+		// selected device address on map
+		$scope.getaddress = details.address;
 		var details = '<p><b>Name</b>: ' + details.dname + '</br>' +
 
 		'<b>ID</b>: ' + details.imei + '</br>' + '<b>Address</b>: '
@@ -103,13 +106,13 @@ function MapController($scope, $http) {
 
 		'</p>';
 
-			google.maps.event.addListener(smarker, 'click', function() {
+		google.maps.event.addListener(smarker, 'click', function() {
 
 			info.setContent(details);
 			info.open(gmap, smarker);
 
 		});
-		
+
 		closeInfoWindo();
 
 		info.setContent(details);
@@ -117,6 +120,7 @@ function MapController($scope, $http) {
 		info.open(gmap, smarker);
 
 	};
+	// close previous infowindow
 	var closeInfoWindo = function() {
 
 		if (lastInfoWindow) {
@@ -125,23 +129,6 @@ function MapController($scope, $http) {
 		}
 
 	};
- var clickmarker=function(clkmarker,devname){google.maps.event.addListener(clkmarker, 'click', function() {
-	
-		getddetails(devname);
-		
-
-	})};
-
-	/*
-	 * var clickevent=google.maps.event.addListener(dw.marker, 'click',
-	 * function() { dw.deviceinfowindow.open(gmap, dw.marker); });
-	 */
-
-	/* Click to show properties */
-	/*
-	 * google.maps.event.addListener(dw.marker, 'click', function() {
-	 * detailsmessage.open(gmap, dw.marker); });
-	 */
 
 	// Get All properties of a device from DeviceController
 	var getddetails = function(devicename) {
@@ -150,7 +137,6 @@ function MapController($scope, $http) {
 			var getdevicedata = result.data;
 			getdeviceproperty = getdevicedata;
 			deviceposition(getdevicedata);
-			/* alert("Result" + getdevicedata.lastupdate); */
 
 		};
 		var failure = function() {
@@ -165,10 +151,17 @@ function MapController($scope, $http) {
 		$http.post('/java/sddetails', sdevice).then(getdetails, failure);
 
 	};
+	// get details after marker click on map
+	var clickmarker = function(clkmarker, devname) {
+		google.maps.event.addListener(clkmarker, 'click', function() {
+
+			getddetails(devname);
+
+		})
+	};
 
 	// Invoke from jsp to get all properties.
 	$scope.selectdevicedetails = getddetails;
-
 
 	/* End Properties */
 
@@ -198,17 +191,27 @@ myangu.controller('account', [ '$scope', '$http', function($scope, $http) {
 } ]);
 
 /* Milagereport */
+
 myangu.controller('milagereport', function($scope, $http) {
 
-	$scope.getstatistics = function() {
-		alert($scope.fromdate);
-		alert($scope.devicename + $scope.fuelconsum);
+	$scope.getstatistics = function(mreport) {
+		/* alert(mreport.todate); */
+		alert(mreport.devicename +mreport.fuelconsum);
+		if (angular.isString(mreport.devicename)
+				&& angular.isDefined(mreport.fuelconsum)) {
+
+			alert("yes");
+
+		} else {
+
+			alert("no")
+		}
 
 		var giveninputvalue = {
-			devicename : $scope.devicename,
-			fromdate : $scope.fromdate,
-			todate : $scope.todate,
-			givenfuelconsumption : $scope.fuelconsum
+			devicename : mreport.devicename,
+			fdata : mreport.fromdate,
+			tdate : mreport.todate,
+			givenfuelconsumption : mreport.fuelconsum
 		};
 		var success = function() {
 			alert("success");

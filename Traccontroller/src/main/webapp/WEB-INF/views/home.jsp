@@ -143,6 +143,7 @@
 									<div class="divTB">
 										<div class="divTRow">
 											<div class="divTCell">
+											
 												<a href="javascript:void(0);"><%=session.getAttribute("username")%>(/{{devicelist.length}})</a>
 											</div>
 										</div>
@@ -163,6 +164,7 @@
 						</div>
 					</div>
 				</div>
+				<div>{{getaddress}}</div>
 				<div class="dip">
 					<div id="map"></div>
 					<div id="class" ng-repeat="marker in markers | orderBy : 'title'">
@@ -176,8 +178,9 @@
 				<form ng-controller="milagereport">
 					<table>
 						<tr>
-							<td>Target Name:<select ng-model="devicename">
-
+							<td>Target Name:<select ng-model="mreport.devicename" required>
+                                    
+                                     <option value="" disabled selected>Please Select</option>
 									<option ng-repeat="keys in devicelist">{{keys}}</option>
 
 							</select>
@@ -201,10 +204,10 @@
 														<div class="input-group">
 
 															<div>
-
-																From
-																<md-datepicker   ng-model="fromdate"></md-datepicker>
-
+                                                              From
+																<md-datepicker    ng-model="mreport.fromdate"></md-datepicker>
+																
+               
 
 															</div>
 
@@ -212,18 +215,19 @@
 
 														<div>
 															To:
-															<md-datepicker ng-model="todate"></md-datepicker>
+															<md-datepicker ng-model="mreport.todate"></md-datepicker>
 
 														</div>
+														
 													</div>
 												</div>
 											</div>
 											<div>
 
 												Fuel Consumption Coefficient/100 Kilometers: <input
-													type="text" name="fconsum" ng-model="fuelconsum"><label>L</label>
+													type="text" name="fconsum" ng-model="mreport.fuelconsum" required><label>L</label>
 												<input type="submit" name="search"
-													ng-click="getstatistics()" value="Search">Search</input>
+													ng-click="getstatistics(mreport)" value="Search">Search</input>
 												<button type="button">To Excel</button>
 											</div>
 											</form>
