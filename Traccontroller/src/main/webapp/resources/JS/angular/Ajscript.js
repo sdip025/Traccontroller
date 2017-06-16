@@ -19,9 +19,8 @@ function MapController($scope, $http) {
 	var clickmap;
 
 	var dl = [];// list of device.
-
 	/* Google Map */
-
+	$scope.date = new Date();
 	var gmap = new google.maps.Map(document.getElementById('map'), {
 		zoom : 5,
 		center : new google.maps.LatLng({
@@ -193,37 +192,63 @@ myangu.controller('account', [ '$scope', '$http', function($scope, $http) {
 /* Milagereport */
 
 myangu.controller('milagereport', function($scope, $http) {
+	$scope.myDate = new Date();
+	$scope.maxDate = new Date($scope.myDate.getFullYear(), $scope.myDate
+			.getMonth(), $scope.myDate.getDate());
+	$scope.minDate = new Date(
+            $scope.myDate.getFullYear()-1,
+            $scope.myDate.getMonth() ,
+            $scope.myDate.getDate());
 
 	$scope.getstatistics = function(mreport) {
 		/* alert(mreport.todate); */
-		alert(mreport.devicename +mreport.fuelconsum);
-		if (angular.isString(mreport.devicename)
-				&& angular.isDefined(mreport.fuelconsum)) {
+		/*
+		 * $scope.testvalue=fuelvalue; alert($scope.testvalue);
+		 */
+		/*$scope.testvalue=fuelvalue; alert($scope.testvalue);*/
+		/*alert(mreport.devicename + mreport.fuelconsum);*/
+
+		if (angular.isString(mreport.devicename)&& angular.isDefined(mreport.fuelconsum) && angular.isDate(mreport.fromdate)&& angular.isDate(mreport.todate)) {
 
 			alert("yes");
+			var giveninputvalue = {
+					devicename : mreport.devicename,
+					fdata : mreport.fromdate,
+					tdate : mreport.todate,
+					givenfuelconsumption : mreport.fuelconsum
+				};
+				var success = function() {
+					alert("success");
+
+				};
+				var failure = function() {
+					alert("failure");
+
+				};
+				$http.post('/java/mileagereport', giveninputvalue).then(success,
+						failure);
 
 		} else {
 
-			alert("no")
+			alert("Please Select a Date");
 		}
 
-		var giveninputvalue = {
-			devicename : mreport.devicename,
-			fdata : mreport.fromdate,
-			tdate : mreport.todate,
-			givenfuelconsumption : mreport.fuelconsum
-		};
-		var success = function() {
-			alert("success");
-
-		};
-		var failure = function() {
-			alert("failure");
-
-		};
-		$http.post('/java/mileagereport', giveninputvalue).then(success,
-				failure);
+		
 
 	};
 
 });
+// validation
+
+/*
+ * myangu.controller('fuelvalidation',function($scope){
+ * 
+ * $scope.fuelconnumber = {number: 1, validity: true}; });
+ * 
+ * myangu.directive('isNumber', function () { return { require: 'ngModel', link:
+ * function (scope) { scope.$watch('fuelconnumber.number',
+ * function(newValue,oldValue) { var arr = String(newValue).split(""); if
+ * (arr.length === 0) return; if (arr.length === 1 && (arr[0] == '-' || arr[0]
+ * === '.' )) return; if (arr.length === 2 && newValue === '-.') return; if
+ * (isNaN(newValue)) { scope.fuelconnumber.number = oldValue; } }); } }; });
+ */

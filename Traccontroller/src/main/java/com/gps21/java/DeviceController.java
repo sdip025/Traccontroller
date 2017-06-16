@@ -66,17 +66,26 @@ public class DeviceController {
 
 	@ResponseBody
 	@RequestMapping(value = "/mileagereport", method = RequestMethod.POST, produces = "application/json")
-	public Statistics milagereport(@RequestBody Userinput userinput) {
+	public Statistics milagereport(@RequestBody Userinput userinput)  {
 		
-		System.out.println(userinput.getDevicename());
+		try {
+
+			System.out.println(userinput.getDevicename());
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("MM-dd-yyyy");
+		String abcd=sdf.format(userinput.getFdata());
+		System.out.println(abcd);
+			
+			
+			System.out.println(userinput.getTdate());
+			System.out.println(userinput.getGivenfuelconsumption());
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
-		SimpleDateFormat sdf=new SimpleDateFormat("MM-dd-yyyy");
-	String abcd=sdf.format(userinput.getFdata());
-	System.out.println(abcd);
 		
 		
-		System.out.println(userinput.getTdate());
-		System.out.println(userinput.getGivenfuelconsumption());
 
 		return null;
 	}

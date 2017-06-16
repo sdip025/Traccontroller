@@ -143,7 +143,7 @@
 									<div class="divTB">
 										<div class="divTRow">
 											<div class="divTCell">
-											
+
 												<a href="javascript:void(0);"><%=session.getAttribute("username")%>(/{{devicelist.length}})</a>
 											</div>
 										</div>
@@ -175,12 +175,13 @@
 
 
 			<div ng-show="tab.isSet(2)">
-				<form ng-controller="milagereport">
+				<form ng-controller="milagereport" name="milagereportform" ng-submit="getstatistics(mreport)">
 					<table>
 						<tr>
-							<td>Target Name:<select ng-model="mreport.devicename" required>
-                                    
-                                     <option value="" disabled selected>Please Select</option>
+							<td>Target Name:<select ng-model="mreport.devicename"
+								required="required">
+
+									<option value="" disabled selected>Please Select</option>
 									<option ng-repeat="keys in devicelist">{{keys}}</option>
 
 							</select>
@@ -204,33 +205,41 @@
 														<div class="input-group">
 
 															<div>
-                                                              From
-																<md-datepicker    ng-model="mreport.fromdate"></md-datepicker>
+																From
+																<md-datepicker ng-model="mreport.fromdate" name="fdate"
+																	md-min-date="minDate" required="required"></md-datepicker>
 																
-               
+
 
 															</div>
 
 														</div>
 
-														<div>
+														<div ng-init="mreport.todate=myDate">
 															To:
-															<md-datepicker ng-model="mreport.todate"></md-datepicker>
+															<md-datepicker ng-model="mreport.todate" name="todate"
+																md-max-date="maxDate" ></md-datepicker>
+															
 
 														</div>
-														
+
 													</div>
 												</div>
 											</div>
-											<div>
+											<div ng-init="mreport.fuelconsum=8.00">
 
 												Fuel Consumption Coefficient/100 Kilometers: <input
-													type="text" name="fconsum" ng-model="mreport.fuelconsum" required><label>L</label>
-												<input type="submit" name="search"
-													ng-click="getstatistics(mreport)" value="Search">Search</input>
+													type="number" ng-model="mreport.fuelconsum"  step="any"
+													min="1.00" required="required"><label>L</label>
+													<input type="submit" value="Submit" />
+												<!-- <md-button ng-disabled="!milagereportform.fdate.$valid"
+													class="md-raised md-primary" name="search"
+													ng-click="getstatistics(mreport)" value="Search">Search</md-button> -->
 												<button type="button">To Excel</button>
 											</div>
-											</form>
+
+
+
 											<div ng-show="showDiv">
 												<table border="2">
 													<tr>
