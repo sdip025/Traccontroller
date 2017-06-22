@@ -239,6 +239,7 @@
 					</additionalBuildcommands>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
+					
 				</configuration>
 			</plugin>
 			<plugin>

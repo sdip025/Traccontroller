@@ -55,6 +55,8 @@ public class HomeController {
 
 	}
 
+	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginpage() {
 
@@ -67,7 +69,7 @@ public class HomeController {
 		return "redirect:locationpage";
 	}
 
-	@RequestMapping(value = "/loginpage", method = RequestMethod.POST)
+	@RequestMapping(value = "/home", method = RequestMethod.POST)
 	public String loginresult(@ModelAttribute("userlog") Users userlog,
 			ModelMap map, HttpSession session) throws NullPointerException,
 			Exception {
@@ -122,7 +124,7 @@ public class HomeController {
 				+ users.getMessage());
 
 		map.addAttribute("messagee", message);
-		return "home";
+		return "updatepassword";
 	}
 
 }

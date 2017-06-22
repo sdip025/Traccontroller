@@ -1,12 +1,38 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
 
-</body>
-</html>
+<div class="divT">
+	<div class="divTableB">
+		<div class="divTableR">
+			<div class="divTableCe">
+
+				<div class="divTab">
+					<div class="divTB">
+						<div class="divTRow">
+							<div class="divTCell">
+
+								<a href="javascript:void(0);"><%=session.getAttribute("username")%>(/{{devicelist.length}})</a>
+							</div>
+						</div>
+						<div class="divTRow">
+							<div class="divTCell">
+
+
+								<div class="section1" ng-repeat="keys in devicelist">
+									<a href="" ng-click="selectdevicedetails(keys)">{{keys}}</a>
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!--  <div>{{getaddress}}</div>
+<div class="dip">
+					<div id="map"></div>
+					<div id="class" ng-repeat="marker in markers | orderBy : 'title'">
+						<a href="#" ng-click="openInfoWindow($event, marker)">{{locations.title}}</a>
+					</div>
+				</div> -->

@@ -1,18 +1,24 @@
-var myangu = angular.module('mapsApp', [ 'ngMaterial', 'ngMessages' ]);
+var myangu = angular.module('mapsApp',
+		[ 'ngMaterial', 'ngMessages', 'ngRoute' ]);
+
+
+//factory to share controller data
+myangu.factory('fdevicelist',function(){
+	
+	var address='';
+	
+	var dname=[];
+	return dname;
+	return address;
+	
+});
+
+
 
 myangu.controller('MapCtrl', MapController);
 
-function MapController($scope, $http) {
+function MapController($scope, $http,fdevicelist) {
 
-	this.tab = 1;
-
-	this.setTab = function(tabId) {
-		this.tab = tabId;
-	};
-
-	this.isSet = function(tabId) {
-		return this.tab === tabId;
-	};
 
 	var lastInfoWindow = null;
 	var preInfoWindow = null;
@@ -62,12 +68,16 @@ function MapController($scope, $http) {
 			var dproper = details.data[dkey];
 			markerpositions(dproper[0], dproper[1], dproper[2]);
 			dl.push(dproper[0]);
-
+	
+			fdevicelist.dname=dl;
 		}
 	};
 	var error = function(reason) {
-		alert("Error");
+		alert("Can Not Get Data");
 	};
+	
+	
+	
 	$scope.devicelist = dl;
 	$scope.getdevicedetails = $http.get("/java/devicedetails").then(
 			getdevicelist, error);
@@ -92,6 +102,7 @@ function MapController($scope, $http) {
 		});
 
 		// selected device address on map
+		alert(details.address);
 		$scope.getaddress = details.address;
 		var details = '<p><b>Name</b>: ' + details.dname + '</br>' +
 
@@ -166,7 +177,7 @@ function MapController($scope, $http) {
 
 }
 /* Update Password */
-myangu.controller('account', [ '$scope', '$http', function($scope, $http) {
+myangu.controller('changepassword', [ '$scope', '$http', function($scope, $http) {
 	$scope.detailspassword = function() {
 		var data = sessionStorage.getItem('username');
 
@@ -191,51 +202,82 @@ myangu.controller('account', [ '$scope', '$http', function($scope, $http) {
 
 /* Milagereport */
 
-myangu.controller('milagereport', function($scope, $http) {
+myangu.controller('milagereport', function($scope, $http,fdevicelist) {
+
+	
+  $scope.sdevicelist = fdevicelist.dname;
 	$scope.myDate = new Date();
 	$scope.maxDate = new Date($scope.myDate.getFullYear(), $scope.myDate
 			.getMonth(), $scope.myDate.getDate());
-	$scope.minDate = new Date(
-            $scope.myDate.getFullYear()-1,
-            $scope.myDate.getMonth() ,
-            $scope.myDate.getDate());
+	$scope.minDate = new Date($scope.myDate.getFullYear() - 1, $scope.myDate
+			.getMonth(), $scope.myDate.getDate());
 
 	$scope.getstatistics = function(mreport) {
-		/* alert(mreport.todate); */
-		/*
-		 * $scope.testvalue=fuelvalue; alert($scope.testvalue);
-		 */
-		/*$scope.testvalue=fuelvalue; alert($scope.testvalue);*/
-		/*alert(mreport.devicename + mreport.fuelconsum);*/
+	
 
-		if (angular.isString(mreport.devicename)&& angular.isDefined(mreport.fuelconsum) && angular.isDate(mreport.fromdate)&& angular.isDate(mreport.todate)) {
+		if (angular.isString(mreport.devicename)
+				&& angular.isDefined(mreport.fuelconsum)
+				&& angular.isDate(mreport.fromdate)
+				&& angular.isDate(mreport.todate)) {
 
-			alert("yes");
+			// alert("yes");
 			var giveninputvalue = {
-					devicename : mreport.devicename,
-					fdata : mreport.fromdate,
-					tdate : mreport.todate,
-					givenfuelconsumption : mreport.fuelconsum
-				};
-				var success = function() {
-					alert("success");
+				devicename : mreport.devicename,
+				fdata : mreport.fromdate,
+				tdate : mreport.todate,
+				givenfuelconsumption : mreport.fuelconsum
+			};
+			var success = function() {
+				// alert("success");
 
-				};
-				var failure = function() {
-					alert("failure");
+			};
+			var failure = function() {
+				alert("Failure");
 
-				};
-				$http.post('/java/mileagereport', giveninputvalue).then(success,
-						failure);
+			};
+			$http.post('/java/mileagereport', giveninputvalue).then(success,
+					failure);
 
 		} else {
 
 			alert("Please Select a Date");
 		}
 
+	};
+
+});
+
+myangu.config(function($routeProvider) {
+
+	$routeProvider.when('/account', {
+
+		templateUrl : '/java/account',
 		
 
-	};
+	}).when('/message', {
+
+		templateUrl : '/java/message',
+		controller : 'message'
+
+	}).when('/updatepassword', {
+
+		templateUrl : '/java/updatepassword',
+		controller : 'changepassword'
+
+	}).when('/',{
+		
+		templateUrl : '/java/monitor',
+		controller : 'MapCtrl'
+	}).when('/statistics',{
+		
+		templateUrl : '/java/statistics',
+		controller : 'milagereport'
+	}).when('/more',{
+		
+		templateUrl : '/java/more',
+		controller : 'more'
+		
+	});
 
 });
 // validation

@@ -26,7 +26,8 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-route.js"></script>
 <script
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAN8QH-4D40wZjFEzXq7yacrFQd_iJdiU"
 	type="text/javascript"></script>
@@ -65,10 +66,6 @@
 	color: red;
 }
 </style>
-<script type="text/javascript">
-	
-</script>
-
 </head>
 <body>
 	<div ng-app="mapsApp">
@@ -88,12 +85,14 @@
 
 
 										<div class="divTableCell">
-											<p>Account</p>
+											<a href="#!account"><p>Account</p></a>
 										</div>
-										<div class="divTableCell">Message</div>
 										<div class="divTableCell">
-											<li ng-class="{active:tab.isSet(4)}"><a
-												ng-click="tab.setTab(4)">Change Password</a></li>
+											<a href="#!message">Message</a>
+										</div>
+										<div class="divTableCell">
+											<li><a href="#!updatepassword">Change
+													Password</a></li>
 										</div>
 										<div class="divTableCell">
 											<a href="${pageContext.request.contextPath}/logout">Logout</a>
@@ -109,20 +108,17 @@
 
 											<div class="divTableCell">
 												<ul class="nav nav-pills">
-													<li ng-class="{active:tab.isSet(1)}"><a
-														ng-click="tab.setTab(1)">Monitor</a></li>
+													<li><a href="#/!">Monitor</a></li>
 												</ul>
 											</div>
 											<div class="divTableCell">
 												<ul class="nav nav-pills">
-													<li ng-class="{active:tab.isSet(2)}"><a
-														ng-click="tab.setTab(2)">Statistics</a></li>
+													<li><a href="#!statistics">Statistics</a></li>
 												</ul>
 											</div>
 											<div class="divTableCell">
 												<ul class="nav nav-pills">
-													<li ng-class="{active:tab.isSet(3)}"><a
-														ng-click="tab.setTab(3)">More</a></li>
+													<li><a href="#!more">More</a></li>
 												</ul>
 											</div>
 										</div>
@@ -133,7 +129,15 @@
 					</div>
 				</div>
 			</header>
-			<div ng-show="tab.isSet(1)">
+			<div>{{getaddress}}</div>
+			<div class="dip">
+				<div id="map"></div>
+				<div id="class" ng-repeat="marker in markers | orderBy : 'title'">
+					<a href="#" ng-click="openInfoWindow($event, marker)">{{locations.title}}</a>
+				</div>
+			</div>
+			<div ng-view></div>
+			<%-- <div ng-show="tab.isSet(1)">
 				<div class="divT">
 					<div class="divTableB">
 						<div class="divTableR">
@@ -172,10 +176,11 @@
 					</div>
 				</div>
 			</div>
+ --%>
 
-
-			<div ng-show="tab.isSet(2)">
-				<form ng-controller="milagereport" name="milagereportform" ng-submit="getstatistics(mreport)">
+			<%-- <div ng-show="tab.isSet(2)">
+				<form ng-controller="milagereport" name="milagereportform"
+					ng-submit="getstatistics(mreport)">
 					<table>
 						<tr>
 							<td>Target Name:<select ng-model="mreport.devicename"
@@ -208,18 +213,14 @@
 																From
 																<md-datepicker ng-model="mreport.fromdate" name="fdate"
 																	md-min-date="minDate" required="required"></md-datepicker>
-																
-
-
-															</div>
-
-														</div>
+                                                           </div>
+</div>
 
 														<div ng-init="mreport.todate=myDate">
 															To:
 															<md-datepicker ng-model="mreport.todate" name="todate"
-																md-max-date="maxDate" ></md-datepicker>
-															
+																md-max-date="maxDate"></md-datepicker>
+
 
 														</div>
 
@@ -229,9 +230,9 @@
 											<div ng-init="mreport.fuelconsum=8.00">
 
 												Fuel Consumption Coefficient/100 Kilometers: <input
-													type="number" ng-model="mreport.fuelconsum"  step="any"
-													min="1.00" required="required"><label>L</label>
-													<input type="submit" value="Submit" />
+													type="number" ng-model="mreport.fuelconsum" step="any"
+													min="1.00" required="required"><label>L</label> <input
+													type="submit" value="Submit" />
 												<!-- <md-button ng-disabled="!milagereportform.fdate.$valid"
 													class="md-raised md-primary" name="search"
 													ng-click="getstatistics(mreport)" value="Search">Search</md-button> -->
@@ -261,13 +262,18 @@
 						</tr>
 					</table>
 				</form>
-			</div>
+			</div> --%>
 
-			<div ng-show="tab.isSet(3)">
+			<!-- <div ng-show="tab.isSet(3)">
 				<h4>Tab 3</h4>
-			</div>
+				<div id="navigation">
+					<a href="#!test1">test1</a><a href="#!test2">test2</a>
+				</div>
+			
 
-			<div ng-show="tab.isSet(4)">
+			</div> -->
+
+			<!-- <div ng-show="tab.isSet(4)">
 				<div class="container">
 
 					<ul class="nav nav-pills">
@@ -289,8 +295,8 @@
 
 
 				</div>
-			</div>
-			<div ng-show="tab.isSet(5)">
+			</div> -->
+			<%-- 	<div ng-show="tab.isSet(5)">
 
 
 				<div class="container">
@@ -340,58 +346,7 @@
 
 				</div>
 
-				<div class="divTable1" align="center">
-					<div class="divTablebody">
-						<div ng-controller="account">
-							<form ng-submit="detailspassword()">
-								<div>
-									<%
-										Changepassword chpass = new Changepassword();
-									%><%=chpass.getMessage()%></div>
-								<div>{{errormessage}}</div>
-								<div>${messagee}</div>
-								<div class="divTableRow">
-
-
-									<div class="divTableCell">User Name:</div>
-									<div class="divTableCell">
-										<input type="text" id="username"
-											value="<%=session.getAttribute("username")%>"
-											ng-init="username = '<%=session.getAttribute("username")%>'"
-											readonly="readonly">
-									</div>
-								</div>
-								<div class="divTableRow">
-									<div class="divTableCell">Existed password:</div>
-									<div class="divTableCell">
-										<input type="password" placeholder="Existed Password"
-											id="Existedpw" ng-model="existedpassword">
-									</div>
-								</div>
-								<div class="divTableRow">
-									<div class="divTableCell">New password:</div>
-									<div class="divTableCell">
-										<input type="password" placeholder="New Password" id="newpw"
-											ng-model="newpassword">
-									</div>
-								</div>
-								<div class="divTableRow">
-									<div class="divTableCell">Password Confirmation:</div>
-									<div class="divTableCell">
-										<input type="password" placeholder="Confirm Password "
-											id="confirmpw" ng-model="confirmpassword">
-									</div>
-								</div>
-								<div class="divTableRow">
-									<div class="divTableCell">Save</div>
-									<div class="divTableCell">
-										<input type="submit" id="pwsubmit" name="Submit">
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+				
 
 
 			</div>
@@ -422,40 +377,11 @@
 
 
 				</div>
-			</div>
+			</div>--%>
 
 		</div>
 
 	</div>
-	<script type="text/javascript"
-		src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 
-	<!-- Include Date Range Picker -->
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
-	<link rel="stylesheet"
-		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-
-	<script>
-		$(document).ready(
-				function() {
-					var date_input = $('input[name="fdate"]');
-					var tdate_input = $('input[name="tdate"]');
-					var container = $('.bootstrap-iso form').length > 0 ? $(
-							'.bootstrap-iso form').parent() : "body";
-					date_input.datepicker({
-						format : 'mm/dd/yyyy',
-						container : container,
-						todayHighlight : true,
-						autoclose : true,
-					})
-					tdate_input.datepicker({
-						format : 'mm/dd/yyyy',
-						container : container,
-						todayHighlight : true,
-						autoclose : true,
-					})
-				})
-	</script>
 </body>
 </html>

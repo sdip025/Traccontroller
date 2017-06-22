@@ -19,7 +19,7 @@
 <body>
 <div class="mainbody">
 <p><%=session.getAttribute("username") %></p>
-	<form action="/java/loginpage" method="post">
+	<form action="/java/home" method="post">
 	
 	<p>${errormessage} </p>
 		<div class="imgcontainer">
