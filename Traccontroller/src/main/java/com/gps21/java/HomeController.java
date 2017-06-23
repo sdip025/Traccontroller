@@ -1,7 +1,5 @@
 package com.gps21.java;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
@@ -23,8 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.gps21.model.Changepassword;
-import com.gps21.model.Devices;
-import com.gps21.model.Positions;
+
 import com.gps21.Services.UserService;
 import com.gps21.model.Users;
 
@@ -38,7 +35,7 @@ public class HomeController {
 	private UserService uservice;
 
 	@Autowired
-	void HomeController(UserService uservice) {
+	public void HomeController(UserService uservice) {
 
 		this.uservice = uservice;
 	}
@@ -54,8 +51,6 @@ public class HomeController {
 		return "login";
 
 	}
-
-	
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String loginpage() {

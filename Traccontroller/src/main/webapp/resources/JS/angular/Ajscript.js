@@ -1,24 +1,20 @@
 var myangu = angular.module('mapsApp',
 		[ 'ngMaterial', 'ngMessages', 'ngRoute' ]);
 
+// factory to share controller data
+myangu.factory('fdevicelist', function() {
 
-//factory to share controller data
-myangu.factory('fdevicelist',function(){
-	
-	var address='';
-	
-	var dname=[];
+	var address = '';
+
+	var dname = [];
 	return dname;
 	return address;
-	
+
 });
-
-
 
 myangu.controller('MapCtrl', MapController);
 
-function MapController($scope, $http,fdevicelist) {
-
+function MapController($scope, $http, fdevicelist) {
 
 	var lastInfoWindow = null;
 	var preInfoWindow = null;
@@ -68,16 +64,14 @@ function MapController($scope, $http,fdevicelist) {
 			var dproper = details.data[dkey];
 			markerpositions(dproper[0], dproper[1], dproper[2]);
 			dl.push(dproper[0]);
-	
-			fdevicelist.dname=dl;
+
+			fdevicelist.dname = dl;
 		}
 	};
 	var error = function(reason) {
 		alert("Can Not Get Data");
 	};
-	
-	
-	
+
 	$scope.devicelist = dl;
 	$scope.getdevicedetails = $http.get("/java/devicedetails").then(
 			getdevicelist, error);
@@ -177,35 +171,43 @@ function MapController($scope, $http,fdevicelist) {
 
 }
 /* Update Password */
-myangu.controller('changepassword', [ '$scope', '$http', function($scope, $http) {
-	$scope.detailspassword = function() {
-		var data = sessionStorage.getItem('username');
+myangu.controller('updatepassword', [
+		'$scope',
+		'$http',
+		function($scope, $http) {
 
-		var formData = {
-			confirmpassword : $scope.confirmpassword,
-			newpassword : $scope.newpassword,
-			existedpassword : $scope.existedpassword,
-			username : $scope.username
-		};
+		/*	alert("From Update Password");*/
+			$scope.detailspassword = function() {
+				var data = sessionStorage.getItem('username');
+				/*alert($scope.confirmpassword + $scope.newpassword
+						+ $scope.existedpassword + $scope.username);*/
+				var formData = {
+					confirmpassword : $scope.confirmpassword,
+					newpassword : $scope.newpassword,
+					existedpassword : $scope.existedpassword,
+					username : $scope.username
 
-		var error = function(responce) {
-			$scope.errormessage = "Unsuccessful";
-			console.log("Unsuccessful");
-		};
-		var submitvalue = function(request) {
-			console.log("successful");
-			$scope.success = "success";
-		};
-		$http.post('/java/updatepassword', formData).then(submitvalue, error);
-	};
-} ]);
+				};
+
+				var error = function() {
+					$scope.errormessage = "Checking";
+					
+					console.log("Unsuccessful");
+				};
+				var submitvalue = function(request) {
+					console.log("successful");
+					$scope.success = "success";
+				};
+				$http.post('/java/updatepassword', formData).then(submitvalue,
+						error);
+			};
+		} ]);
 
 /* Milagereport */
 
-myangu.controller('milagereport', function($scope, $http,fdevicelist) {
+myangu.controller('milagereport', function($scope, $http, fdevicelist) {
 
-	
-  $scope.sdevicelist = fdevicelist.dname;
+	$scope.sdevicelist = fdevicelist.dname;
 	$scope.myDate = new Date();
 	$scope.maxDate = new Date($scope.myDate.getFullYear(), $scope.myDate
 			.getMonth(), $scope.myDate.getDate());
@@ -213,7 +215,6 @@ myangu.controller('milagereport', function($scope, $http,fdevicelist) {
 			.getMonth(), $scope.myDate.getDate());
 
 	$scope.getstatistics = function(mreport) {
-	
 
 		if (angular.isString(mreport.devicename)
 				&& angular.isDefined(mreport.fuelconsum)
@@ -252,31 +253,30 @@ myangu.config(function($routeProvider) {
 	$routeProvider.when('/account', {
 
 		templateUrl : '/java/account',
-		
 
 	}).when('/message', {
 
 		templateUrl : '/java/message',
-		controller : 'message'
+	/* controller : 'message' */
 
 	}).when('/updatepassword', {
 
 		templateUrl : '/java/updatepassword',
-		controller : 'changepassword'
+		controller : 'updatepassword'
 
-	}).when('/',{
-		
+	})/*.when('/abcd', {
+
 		templateUrl : '/java/monitor',
 		controller : 'MapCtrl'
-	}).when('/statistics',{
-		
+	})*/.when('/statistics', {
+
 		templateUrl : '/java/statistics',
 		controller : 'milagereport'
-	}).when('/more',{
-		
+	}).when('/more', {
+
 		templateUrl : '/java/more',
-		controller : 'more'
-		
+	/* controller : 'more' */
+
 	});
 
 });

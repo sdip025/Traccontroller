@@ -24,11 +24,11 @@ public class PageController {
 		return "message";
 	}
 
-	/*@RequestMapping(value = "/changepassword")
+	@RequestMapping(value = "/updatepassword")
 	public String Changepassword() {
 
-		return "changepassword";
-	}*/
+		return "updatepassword";
+	}
 
 	@RequestMapping(value = "/monitor")
 	public String Monitor() {

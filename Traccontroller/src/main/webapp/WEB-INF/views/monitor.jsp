@@ -1,4 +1,4 @@
-
+<%-- 
 <div class="divT">
 	<div class="divTableB">
 		<div class="divTableR">
@@ -29,10 +29,10 @@
 		</div>
 	</div>
 </div>
-<!--  <div>{{getaddress}}</div>
+ <div>{{getaddress}}</div>
 <div class="dip">
 					<div id="map"></div>
 					<div id="class" ng-repeat="marker in markers | orderBy : 'title'">
 						<a href="#" ng-click="openInfoWindow($event, marker)">{{locations.title}}</a>
 					</div>
-				</div> -->
+				</div> --%>
